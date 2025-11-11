@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARPAKA 18 | Bitácoras Hechas a Mano con Alma Peruana</title>
+    <!-- Carga de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Incluimos Lucide Icons (SVG) para iconos estéticos -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        // Personalización de colores con Ocre, Verde Agua y Negro/Blanco - Enfoque Minimalista (Estilo Bocettos)
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // Paleta Ocre, Verde Agua y Negro
+                        'arpaka-aqua': '#81C7BE',        // Verde Agua Muted (Principal, Contraste Moderno, CTA)
+                        'arpaka-ochre': '#EEB558',       // Ocre Suave/Tierra (Calidez, Marca, Títulos)
+                        
+                        'arpaka-black': '#212121',       // Negro profundo para texto y fondo oscuro
+                        'arpaka-white': '#FFFFFF',       // Blanco puro
+                        'arpaka-neutral': '#F9F7F5',     // Blanco roto/Crema (Fondo limpio dominante)
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                        // Fuente serif para un toque de título más premium (Georgia para Bocettos-like)
+                        'serif-title': ['Georgia', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Estilos personalizados */
+        .product-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            border: 1px solid #E0E0E0;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            /* Sombra con el color de acento Verde Agua */
+            box-shadow: 0 10px 20px rgba(129, 199, 190, 0.4);
+        }
+
+        /* Estilo para el botón CTA con animación de calidad */
+        .cta-button {
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+        }
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Estilo para la sección Hero: Fondo Blanco/Neutral con Imagen de Estudio */
+        .hero-section {
+            background-color: #F9F7F5; /* Fondo neutral limpio */
+            /* Texto del placeholder cambiado a 'ARPAKA' */
+            background-image: url("");
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Clase para los iconos de la sección de características */
+        .icon-box {
+            /* Borde con el color de Verde Agua */
+            border: 2px solid #81C7BE;
+            padding: 1rem;
+            border-radius: 9999px; /* fully rounded */
+        }
+    </style>
+</head>
+<body class="bg-arpaka-neutral text-arpaka-black font-sans">
+
+    <!-- 1. Navegación Fija (Limpia y Simple) -->
+    <nav class="bg-arpaka-white sticky top-0 z-10 shadow-lg">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo en Ocre -->
+            <h1 class="text-3xl font-bold text-arpaka-ochre" style="font-family: 'serif-title', serif;">ARPAKA 18</h1>
+            <div class="space-x-8 hidden md:flex text-lg font-medium">
+                <a href="#experiencia" class="text-arpaka-black hover:text-arpaka-aqua transition">Nuestra Historia</a>
+                <a href="#catalogo" class="text-arpaka-black hover:text-arpaka-aqua transition">Revista Virtual</a>
+                <a href="#contacto" class="text-arpaka-black hover:text-arpaka-aqua transition">Contacto</a>
+            </div>
+            <!-- Botón CTA en Verde Agua -->
+            <button class="bg-arpaka-aqua text-arpaka-black cta-button font-bold py-2 px-4 rounded-full text-base hidden sm:block hover:bg-arpaka-ochre hover:text-arpaka-white">
+                Ver Colección
+            </button>
+        </div>
+    </nav>
+
+    <!-- 2. Hero Section (Alto Impacto Visual y Mensaje Único - Mínimalista y Acomodado) -->
+    <section class="hero-section flex items-center justify-center p-10 pt-32 pb-32 md:p-24 md:pt-40 md:pb-40">
+        <!-- Contenedor de texto más pequeño y centrado, sin blur ni sombra fuerte para minimalismo -->
+        <div class="text-center max-w-3xl p-4 md:p-8">
+            
+            <!-- Título principal en Negro, grande y limpio -->
+             <h2 class="text-5xl md:text-7xl font-extrabold text-arpaka-black mb-6 leading-tight" style="font-family: 'serif-title', serif;">
+                TU ESPACIO EN BLANCO.
+            </h2>
+            <!-- Línea descriptiva clara y concisa (reemplaza el texto sutil anterior) -->
+            <p class="text-lg md:text-xl font-medium text-gray-700 mb-12 max-w-xl mx-auto">
+                Diseño minimalista y tradición peruana en cada bitácora. El lienzo perfecto para tus ideas.
+            </p>
+
+            <!-- CTA principal en Verde Agua - más grande -->
+            <a href="#catalogo" class="cta-button inline-block bg-arpaka-aqua text-arpaka-black font-extrabold py-4 px-12 text-xl rounded-lg uppercase hover:bg-arpaka-ochre hover:text-arpaka-white">
+                Ver Colección Exclusiva
+            </a>
+        </div>
+    </section>
+
+    <!-- 3. Segmento de Storytelling (Alternancia de Fondos) -->
+
+    <!-- Segmento A: Calidez y Artesanía (Fondo Ocre) -->
+   
+
+    <!-- Segmento B: Calidad y Confianza (Fondo Blanco, Elementos Negro y Verde Agua) -->
+    <section class="bg-arpaka-neutral text-arpaka-black p-6 md:p-12 my-0">
+        <div class="max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-12">
+            <!-- Bloque de Texto Mínimo -->
+            <div class="lg:w-1/2">
+                <!-- Título en Negro -->
+                <h3 class="text-4xl font-bold text-arpaka-black mb-4" style="font-family: 'serif-title', serif;">
+                    Diseño y Funcionalidad
+                </h3>
+                <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+                    No solo son hermosas. Están diseñadas para abrirse completamente y tener el papel perfecto para escritura, dibujo o acuarela. Calidad que se siente al tacto.
+                </p>
+                <!-- CTA en Ocre -->
+                <a href="#catalogo" class="cta-button inline-block bg-arpaka-ochre text-arpaka-white font-bold py-3 px-6 rounded-full hover:bg-arpaka-aqua hover:text-arpaka-black">
+                    Ver Características Técnicas
+                </a>
+            </div>
+
+            <!-- Bloque Visual (Placeholder Grande) en Verde Agua -->
+            <div class="lg:w-1/2 min-h-80 bg-arpaka-aqua rounded-xl shadow-2xl flex items-center justify-center p-8">
+                 <div class="text-center">
+                    <i data-lucide="map" class="w-16 h-16 mx-auto text-arpaka-black mb-4"></i>
+                    <p class="text-xl font-bold text-arpaka-black">Sierra, Costa y Selva en un solo libro.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Revista Virtual Estética: Catálogo de Productos (Limpio y Centrado) -->
+    <section id="catalogo" class="bg-arpaka-neutral p-8 md:p-16 my-16">
+        <div class="max-w-7xl mx-auto">
+            <!-- Título en Ocre -->
+            <h2 class="text-4xl font-bold text-arpaka-ochre mb-4 text-center" style="font-family: 'serif-title', serif;">Revista Virtual: Encuentra Tu Lienzo</h2>
+            <p class="text-center text-xl text-arpaka-black mb-12 italic">Colección única de piezas hechas para durar.</p>
+
+            <!-- Grid de Productos -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+
+                <!-- Producto 1: Inti Raymi (Ocre) -->
+                <div class="product-card bg-arpaka-white rounded-2xl overflow-hidden">
+                    <div class="h-64 bg-arpaka-ochre flex items-center justify-center">
+                        <i data-lucide="ruler" class="w-20 h-20 text-arpaka-white"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-arpaka-black mb-1">Inti Raymi</h3>
+                        <p class="text-arpaka-aqua font-semibold mb-3">Tapa Dura y Resistente</p>
+                        <p class="text-sm text-gray-600 mb-4">Ideal para proyectos importantes y uso diario intenso. Inspiración de la Sierra.</p>
+                        <div class="flex justify-between items-center mt-4 border-t pt-4">
+                            <span class="text-3xl font-extrabold text-arpaka-ochre">S/. 59.90</span>
+                            <!-- Botón CTA en Verde Agua -->
+                            <button class="bg-arpaka-aqua text-arpaka-black cta-button font-bold py-2 px-6 rounded-full text-lg hover:bg-arpaka-ochre hover:text-arpaka-white">
+                                + Añadir
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 2: Selva Mágica (Verde Agua) -->
+                <div class="product-card bg-arpaka-white rounded-2xl overflow-hidden">
+                    <div class="h-64 bg-arpaka-aqua flex items-center justify-center">
+                         <i data-lucide="leaf" class="w-20 h-20 text-arpaka-black"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-arpaka-black mb-1">Selva Mágica</h3>
+                        <p class="text-arpaka-ochre font-semibold mb-3">Flexible. Papel Reciclado.</p>
+                        <p class="text-sm text-gray-600 mb-4">Ligera y orgánica. Perfecta para bocetos rápidos y llevar en el morral.</p>
+                        <div class="flex justify-between items-center mt-4 border-t pt-4">
+                            <span class="text-3xl font-extrabold text-arpaka-ochre">S/. 49.90</span>
+                            <button class="bg-arpaka-aqua text-arpaka-black cta-button font-bold py-2 px-6 rounded-full text-lg hover:bg-arpaka-ochre hover:text-arpaka-white">
+                                + Añadir
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 3: Arena & Mar (Negro) -->
+                <div class="product-card bg-arpaka-white rounded-2xl overflow-hidden">
+                    <div class="h-64 bg-arpaka-black flex items-center justify-center">
+                         <i data-lucide="droplet" class="w-20 h-20 text-arpaka-white"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-arpaka-black mb-1">Arena & Mar</h3>
+                        <p class="text-arpaka-aqua font-semibold mb-3">Apertura 180°. Estilo Bohemio.</p>
+                        <p class="text-sm text-gray-600 mb-4">Tapa de cuero suave con apertura completa. Ideal para escritura y journaling.</p>
+                        <div class="flex justify-between items-center mt-4 border-t pt-4">
+                            <span class="text-3xl font-extrabold text-arpaka-ochre">S/. 69.90</span>
+                            <button class="bg-arpaka-aqua text-arpaka-black cta-button font-bold py-2 px-6 rounded-full text-lg hover:bg-arpaka-ochre hover:text-arpaka-white">
+                                + Añadir
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div> <!-- Fin Grid -->
+
+            <!-- CTA Final del Catálogo en Ocre -->
+            <div class="text-center mt-16">
+                <a href="#catalogo" class="cta-button inline-block bg-arpaka-ochre text-arpaka-white font-extrabold py-4 px-12 text-2xl rounded-lg uppercase shadow-xl hover:bg-arpaka-aqua hover:text-arpaka-black">
+                    VER TODA LA GALERÍA
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Footer (Negro Profundo para un cierre de marca fuerte y elegante) -->
+    <footer id="contacto" class="bg-arpaka-black text-arpaka-white p-8 mt-12">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+            <div class="mb-4 md:mb-0">
+                <p class="font-bold text-xl" style="font-family: 'serif-title', serif;">ARPAKA 18</p>
+                <p class="text-sm text-arpaka-ochre">Calidad certificada, tradición viva.</p>
+            </div>
+            <div class="text-sm">
+                <p class="text-lg font-semibold mb-2">Conversemos</p>
+                <p>Intagram: @arpaka18</p>
+                <p>Teléfono: 985 352 699 - 960 315 368</p>
+                <!-- Iconos de Redes Sociales en Verde Agua -->
+                <div class="mt-4 space-x-4 flex justify-center md:justify-start">
+                    <a href="#" class="text-arpaka-aqua hover:text-arpaka-ochre transition duration-300"><i data-lucide="instagram" class="w-6 h-6"></i></a>
+                    <a href="#" class="text-arpaka-aqua hover:text-arpaka-ochre transition duration-300"><i data-lucide="facebook" class="w-6 h-6"></i></a>
+                    <a href="#" class="text-arpaka-aqua hover:text-arpaka-ochre transition duration-300"><i data-lucide="mail" class="w-6 h-6"></i></a>
+                </div>
+            </div>
+        </div>
+        <p class="text-center text-xs mt-6 opacity-50">&copy; 2025 ARPAKA 18. Bitácoras que inspiran.</p>
+    </footer>
+
+    <!-- Script para inicializar Lucide Icons -->
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
