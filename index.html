@@ -234,17 +234,17 @@
                         <!-- Placeholder para la imagen del producto 1 --><img src="IMG/CHICLITO 1.jpeg" onerror="this.onerror=null; this.src='https://placehold.co/600x400/F8F8F8/1A1A1A?text=No+Image';" alt="Bitácora Inti Raymi" class="w-full h-full object-cover">
                     </div>
                     <!-- Área clickable para expandir detalles --><div class="p-6 cursor-pointer toggle-details">
-                        <h3 class="text-2xl font-bold text-arpaka-primary mb-1">Inti Raymi (Tan)</h3>
-                        <p class="text-arpaka-accent font-semibold mb-3">Tapa Dura y Resistente</p>
-                        <p class="text-sm text-gray-600 mb-4">Clásico. Ideal para proyectos importantes y uso diario intenso. Inspiración andina.</p>
+                        <h3 class="text-2xl font-bold text-arpaka-primary mb-1">Chicha Morada</h3>
+                        <p class="text-arpaka-accent font-semibold mb-3">Cuadernillo vertical / 80gr</p>
+                        <p class="text-sm text-gray-600 mb-4">Clásico. Ideal para bocetos y uso diario intenso. Inspiración peruana.</p>
                         
                         <!-- Sección de detalles ocultos (Expansión) --><div class="product-details" data-expanded="false">
                             <p class="text-xs text-gray-500 italic mb-2 pt-4 border-t border-gray-100">Especificaciones Adicionales:</p>
                             <ul class="text-sm list-disc pl-5 space-y-1 text-gray-700">
-                                <li>**Formato:** A5.</li>
-                                <li>**Papel:** 180 páginas de papel ahuesado (120gr).</li>
-                                <li>**Encuadernación:** Cosida a mano, apertura 180°.</li>
-                                <li>**Procedencia:** Hecho en Perú.</li>
+                                <li>Formato A5 y A6.</li>
+                                <li>50 páginas de papel avena (80gr).</li>
+                                <li>Costura visible en el lomo.</li>
+                                <li>Hecho en Perú.</li>
                             </ul>
                         </div>
                     </div>
@@ -450,7 +450,7 @@
                     const card = e.target.closest('.product-card');
                     const productName = card ? card.querySelector('h3').textContent.split('(')[0].trim() : 'Producto';
                     
-                    showNotification(`${productName} añadido al carrito con éxito.`);
+                    showNotification(`${productName} en camino...`);
                 });
             });
 
