@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARPAKA18 | Bitácoras</title>
+    <link rel="icon" href="img/CABEZA BLANCO ICO.ico">
+    <!-- Carga de fuentes profesionales: Playfair Display (Serif Elegante) y Open Sans (Cuerpo Legible) --><link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <!-- Carga de Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    <!-- Incluimos Lucide Icons (SVG) para iconos estéticos (solo el link, no la inicialización) --><script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        // Personalización de colores: Paleta Sobria, Formal y Elegante (Negro, Blanco y Acero Suave)
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // Paleta Sobria
+                        'arpaka-primary': '#1A1A1A',      // Negro Profundo (Dominante para texto y CTAs)
+                        'arpaka-accent': '#EFA523',      // Amarillo Ocre, Arpaka
+                        
+                        'arpaka-black': '#1A1A1A',       // Profundo para elementos de contraste
+                        'arpaka-white': '#FFFFFF',       // Blanco puro
+                        'arpaka-neutral': '#F8F8F8',     // Gris muy claro / Off-White (Fondo limpio dominante)
+                    },
+                    fontFamily: {
+                        // FUENTE PROFESIONAL: OPEN SANS para cuerpo y elementos de interfaz
+                        'sans': ['Open Sans', 'sans-serif'],
+                        // FUENTE DE LUJO: PLAYFAIR DISPLAY para títulos principales y elegancia
+                        'serif-title': ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Estilos personalizados */
+        .product-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            border: 1px solid #E0E0E0;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            /* Sombra sutil y elegante en tono oscuro */
+            box-shadow: 0 10px 20px rgba(26, 26, 26, 0.15);
+        }
+
+        /* Estilo para el botón CTA con animación de calidad */
+        .cta-button {
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            /* Sombra más marcada para un look premium */
+        }
+        .cta-button:hover {
+            transform: translateY(-2px);
+            /* Al hacer hover, se usa el acento suave */
+            background-color: #EFA523; 
+            color: #FFFFFF;
+        }
+
+        /* Estilo para la sección Hero: Fondo Blanco/Neutral con Imagen de Estudio */
+        .hero-section {
+            background-color: #F8F8F8; /* Fondo neutral limpio */
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Clase para los iconos de la sección de características */
+        .icon-box {
+            /* Borde con el color de acento (Acero Suave) */
+            border: 2px solid #A38E75;
+            padding: 1rem;
+            border-radius: 9999px; /* fully rounded */
+        }
+        /* Ajuste para el logo si es necesario */
+        .logo-img {
+            height: 40px; /* Ajusta la altura del logo según el diseño */
+            width: auto;
+            filter: invert(7%); /* Invierte el color para que se vea oscuro sobre claro */
+        }
+
+        /* ESTILOS DE DINAMISMO - SCROLL REVEAL (JS) */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 1. ANIMACIÓN DE TÍTULO AL CARGAR */
+        .animated-hero-title {
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+        }
+        .animated-hero-title.loaded {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 2. ESTILO PARA DETALLES EXPANDIBLES (Didáctico) */
+        .product-details {
+            /* Estado inicial colapsado */
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
+            padding-top: 0;
+        }
+        .product-details.expanded {
+            /* La altura será establecida por JS, solo aseguramos la transición */
+            padding-top: 1rem; 
+        }
+
+        /* 3. ANIMACIÓN DE FLOTACIÓN (Para el CTA fijo) */
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0); }
+        }
+        .float-animation {
+            animation: float 2s ease-in-out infinite;
+        }
+        
+    </style>
+</head>
+<body class="bg-arpaka-neutral text-arpaka-black font-sans">
+
+    <!-- BARRA LATERAL DESPLEGABLE (MOBILE/TABLET) --><aside id="mobile-sidebar" class="fixed top-0 right-0 h-full w-64 md:w-80 bg-white/90 backdrop-blur-md z-50 transform translate-x-full transition-transform duration-300 shadow-2xl">
+        <div class="p-6 h-full flex flex-col">
+            <!-- Encabezado y botón de cierre --><div class="flex justify-between items-center mb-10 border-b pb-4">
+                <h3 class="text-2xl font-bold text-arpaka-accent" style="font-family: 'serif-title', serif;">Arpaka18</h3>
+                <!-- Botón de cierre usando un SVG de Lucide --><button id="close-sidebar" class="text-arpaka-primary hover:text-arpaka-accent transition p-1 rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                </button>
+            </div>
+            
+            <!-- Enlaces de navegación principales --><nav class="flex flex-col space-y-6 text-xl font-medium mb-auto">
+                <a href="index.html" class="text-arpaka-black hover:text-arpaka-accent transition border-b pb-2">Home</a>
+                <a href="#" class="text-arpaka-black hover:text-arpaka-accent transition border-b pb-2">Nosotros</a>
+                <a href="#" class="text-arpaka-black hover:text-arpaka-accent transition border-b pb-2">Puntos de venta</a>
+                <!-- CTA del menú lateral --><a href="Galería.html" class="bg-arpaka-accent text-arpaka-white cta-button font-bold py-3 px-4 rounded-lg text-base text-center hover:bg-arpaka-primary mt-4">
+                    Productos
+                </a>
+            </nav>
+            
+            <!-- Información de contacto y redes sociales (Parte inferior) --><div class="pt-6 border-t">
+                <p class="text-lg font-semibold mb-3 text-arpaka-primary">Redes Sociales</p>
+                <div class="flex flex-col space-y-3 text-sm">
+                    <a href="#" class="text-gray-700 hover:text-arpaka-accent transition duration-300"></a>
+                    <a href="https://instagram.com/Arpaka18" target="_blank" class="text-gray-700 hover:text-arpaka-accent transition duration-300">Instagram: @Arpaka18</a>
+                    <p class="mt-4 text-xs text-gray-500">Email: info@arpaka18.pe</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- 1. Navegación Fija (Limpia y Simple) --><!-- ID 'main-nav' añadido para el control de estilo por scroll en JS --><nav id="main-nav" class="bg-arpaka-white sticky top-0 z-30 shadow-md transition-shadow duration-300">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo de Llama en la navegación --><a href="index.html" class="flex items-center space-x-2">
+                <img src="img/CABEZA CON NOMBRE.png" alt="ARPAKA 18 Logo de Llama" class="logo-img">
+                <h1 class="text-3xl font-bold text-arpaka-accent" style="font-family: 'serif-title', serif;"></h1>
+            </a>
+            
+            <!-- Enlaces de Navegación (Solo Desktop) --><div class="hidden lg:flex space-x-8 text-lg font-medium">
+                <a href="index.html" class="text-arpaka-black hover:text-arpaka-accent transition">Home</a>
+                <a href="#" class="text-arpaka-black hover:text-arpaka-accent transition">Nosotros</a>
+                <a href="#contacto" class="text-arpaka-black hover:text-arpaka-accent transition">Contacto</a>
+            </div>
+            
+            <!-- Controles a la derecha: CTA (Desktop) y Botón de Menú (Mobile) --><div class="flex items-center space-x-4">
+                <!-- Botón CTA en Negro Profundo (Desktop) --><a href="Galería.html" class="hidden lg:block bg-arpaka-primary text-arpaka-white cta-button font-bold py-2 px-4 rounded-full text-base hover:bg-arpaka-accent text-center inline-block"> Productos </a>
+                
+                <!-- Botón de Menú Hamburguesa (Mobile/Tablet) --><button id="open-sidebar" class="lg:hidden text-arpaka-primary hover:text-arpaka-accent transition p-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 2. Hero Section (Alto Impacto Visual y Mensaje Único - Formal y Sobrio) --><section class="hero-section flex items-center justify-center p-10 pt-32 pb-32 md:p-24 md:pt-40 md:pb-40">
+        <div class="text-center max-w-3xl p-4 md:p-8 bg-white/70 rounded-xl">
+            
+            <!-- Título principal con clase para animación al cargar --><h2 class="animated-hero-title text-5xl md:text-7xl font-extrabold text-arpaka-primary mb-6 leading-tight" style="font-family: 'serif-title', serif;">
+                LA BITÁCORA DE LA DISTINCIÓN.
+            </h2>
+            <!-- Línea descriptiva clara y concisa (en Negro Suave) --><p class="text-lg md:text-xl font-medium text-gray-800 mb-12 max-w-xl mx-auto">
+                Diseño sobrio, arte funcional. Bitácoras hechas a mano para el pensamiento de alto nivel.
+            </p>
+
+            <!-- CTA principal en Negro Profundo - más grande --><a href="Galería.html" class="cta-button inline-block bg-arpaka-primary text-arpaka-white font-extrabold py-4 px-12 text-xl rounded-lg uppercase hover:text-arpaka-white">
+                Ver Colección Exclusiva 
+            </a>
+        </div>
+    </section>
+
+    <!-- 3. Segmento de Storytelling (Nuestra Historia) --><!-- Clase 'scroll-reveal' añadida para animación --><section id="experiencia" class="bg-arpaka-neutral text-arpaka-black p-6 md:p-12 my-0 scroll-reveal">
+        <div class="max-w-7xl mx-auto">
+            <!-- Bloque de Texto Mínimo, ahora centrado y de ancho limitado para formalidad --><div class="max-w-3xl mx-auto text-center">
+                <!-- Título en Negro Profundo --><h3 class="text-4xl font-bold text-arpaka-primary mb-4" style="font-family: 'serif-title', serif;">
+                    Diseño y Funcionalidad
+                </h3>
+                
+                <!-- Destacando los tamaños A5 y A6 --><p class="text-xl font-semibold text-arpaka-primary mb-4">
+                    Disponibles en A5 y A6: El formato perfecto para cada idea.
+                </p>
+
+                <p class="text-lg text-gray-700 mb-8 leading-relaxed">
+                    Nuestras bitácoras están diseñadas para la apertura completa, el papel de calidad superior y una ergonomía que mejora la experiencia de escritura o boceto. Elija el **A5** para el trabajo de escritorio con amplio espacio o el **A6** para la portabilidad discreta y elegante.
+                </p>
+                <!-- CTA en Acero Suave --><a href="#galeria" class="cta-button inline-block bg-arpaka-accent text-arpaka-white font-bold py-3 px-6 rounded-full hover:bg-arpaka-primary hover:text-arpaka-white">
+                    Ver Especificaciones Técnicas
+                </a>
+                
+                <!-- Etiquetas con borde de Acero Suave --><div class="flex flex-wrap justify-center gap-4 text-arpaka-black font-semibold mt-8">
+                    <span class="icon-box border-arpaka-accent text-arpaka-black">Materiales Premium</span>
+                    <span class="icon-box border-arpaka-accent text-arpaka-black">Edición Limitada</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Galería de Productos (Solo Productos) --><!-- Clase 'scroll-reveal' añadida para animación --><section id="galeria" class="bg-arpaka-neutral p-8 md:p-16 my-16 scroll-reveal">
+        <div class="max-w-7xl mx-auto">
+            <!-- Grid de Productos --><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+
+                <!-- Producto 1: Inti Raymi --><div class="product-card bg-arpaka-white rounded-2xl overflow-hidden">
+                    <div class="h-64 bg-gray-100 flex items-center justify-center">
+                        <!-- Placeholder para la imagen del producto 1 --><img src="img/bitacoras/chiclito/CHICLITO1.jpeg" alt="Bitácora Inti Raymi" class="w-full h-full object-cover">
+                    </div>
+                    <!-- Área clickable para expandir detalles --><div class="p-6 cursor-pointer toggle-details">
+                        <h3 class="text-2xl font-bold text-arpaka-primary mb-1">Bitácora Chicha Morada</h3>
+                        <p class="text-arpaka-accent font-semibold mb-3">Cuadernillo vertical / 80gr</p>
+                        <p class="text-sm text-gray-600 mb-4">Clásico. Ideal para bocetos y uso diario intenso. Inspiración peruana.</p>
+                        
+                        <!-- Sección de detalles ocultos (Expansión) --><div class="product-details" data-expanded="false">
+                            <p class="text-xs text-gray-500 italic mb-2 pt-4 border-t border-gray-100">Especificaciones Adicionales:</p>
+                            <ul class="text-sm list-disc pl-5 space-y-1 text-gray-700">
+                                <li>Formato A5 y A6.</li>
+                                <li>50 páginas de papel avena (80gr).</li>
+                                <li>Costura visible en el lomo.</li>
+                                <li>Hecho en Perú.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center px-6 pb-6 pt-4 border-t">
+                        <span class="text-3xl font-extrabold text-arpaka-primary">S/. 24.99</span>
+                        <!-- Botón CTA en Negro Profundo con JS Evento -->
+                        <a href="Chicha morada.html" class="bg-arpaka-primary text-arpaka-white cta-button font-bold py-2 px-6 rounded-full text-lg hover:bg-arpaka-accent hover:text-arpaka-white add-to-cart-btn">Descubrir</a> 
+                        <!--<button class="bg-arpaka-primary text-arpaka-white cta-button font-bold py-2 px-6 rounded-full text-lg hover:bg-arpaka-accent hover:text-arpaka-white add-to-cart-btn">
+                            Descubrir
+                        </button>-->
+                    </div>
+                </div>
+
+                <!-- Producto 2: Selva Mágica --><div class="product-card bg-arpaka-white rounded-2xl overflow-hidden">
+                    <div class="h-64 bg-gray-100 flex items-center justify-center">
+                         <!-- Placeholder para la imagen del producto 2 --><img src="img/bitacoras/zaha/zaha_1.jpeg" onerror="this.onerror=null; this.src='https://placehold.co/600x400/F8F8F8/1A1A1A?text=No+Image';" alt="Bitácora Selva Mágica" class="w-full h-full object-cover">
+                    </div>
+                    <!-- Área clickable para expandir detalles --><div class="p-6 cursor-pointer toggle-details">
+                        <h3 class="text-2xl font-bold text-arpaka-primary mb-1">Bitácora Zaha</h3>
+                        <p class="text-arpaka-accent font-semibold mb-3">Flexible. Papel Premium.</p>
+                        <p class="text-sm text-gray-600 mb-4">Orgánico y ligero. Perfecto para bocetos rápidos y llevar en el maletín.</p>
+                        
+                        <!-- Sección de detalles ocultos (Expansión) --><div class="product-details" data-expanded="false">
+                            <p class="text-xs text-gray-500 italic mb-2 pt-4 border-t border-gray-100">Especificaciones Adicionales:</p>
+                            <ul class="text-sm list-disc pl-5 space-y-1 text-gray-700">
+                                <li>**Formato:** A6.</li>
+                                <li>**Papel:** 120 páginas de papel ahuesado (100gr).</li>
+                                <li>**Encuadernación:** Tapa blanda, ligero.</li>
+                                <li>**Procedencia:** Hecho en Perú.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between items-center px-6 pb-6 pt-4 border-t">
+                        <span class="text-3xl font-extrabold text-arpaka-primary">S/. 24.99</span>
+                        <!-- Botón CTA en Negro Profundo con JS Evento --><button class="bg-arpaka-primary text-arpaka-white cta-button font-bold py-2 px-6 rounded-full text-lg hover:bg-arpaka-accent hover:text-arpaka-white add-to-cart-btn">
+                            Descubrir
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Producto 3: Arena & Mar --><div class="product-card bg-arpaka-white rounded-2xl overflow-hidden">
+                    <div class="h-64 bg-gray-100 flex items-center justify-center">
+                         <!-- Placeholder para la imagen del producto 3 --><img src="img/bitacoras/ronchamp/ronchamp_1.jpeg" onerror="this.onerror=null; this.src='https://placehold.co/600x400/F8F8F8/1A1A1A?text=No+Image';" alt="Bitácora Arena & Mar" class="w-full h-full object-cover">
+                    </div>
+                    <!-- Área clickable para expandir detalles --><div class="p-6 cursor-pointer toggle-details">
+                        <h3 class="text-2xl font-bold text-arpaka-primary mb-1">Bitácora Ronchamp</h3>
+                        <p class="text-arpaka-accent font-semibold mb-3">Apertura 180°. Estilo Executive.</p>
+                        <p class="text-sm text-gray-600 mb-4">Tapa de cuero suave con apertura completa. Ideal para escritura y planeación.</p>
+                        
+                        <!-- Sección de detalles ocultos (Expansión) --><div class="product-details" data-expanded="false">
+                            <p class="text-xs text-gray-500 italic mb-2 pt-4 border-t border-gray-100">Especificaciones Adicionales:</p>
+                            <ul class="text-sm list-disc pl-5 space-y-1 text-gray-700">
+                                <li>**Formato:** A5 y A6 (Mixto).</li>
+                                <li>**Papel:** 200 páginas punteadas (dot-grid).</li>
+                                <li>**Encuadernación:** Lomo plano, acabado ejecutivo.</li>
+                                <li>**Procedencia:** Hecho en Perú.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center px-6 pb-6 pt-4 border-t">
+                        <span class="text-3xl font-extrabold text-arpaka-primary">S/. 24.99</span>
+                        <!-- Botón CTA en Negro Profundo con JS Evento --><button class="bg-arpaka-primary text-arpaka-white cta-button font-bold py-2 px-6 rounded-full text-lg hover:bg-arpaka-accent hover:text-arpaka-white add-to-cart-btn">
+                            Descubrir
+                        </button>
+                    </div>
+                </div>
+
+            </div> <!-- Fin Grid --><!-- CTA Final de la Galería en Negro Profundo --><div class="text-center mt-16">
+                <a href="Galería.html" class="cta-button inline-block bg-arpaka-primary text-arpaka-white font-extrabold py-4 px-12 text-2xl rounded-lg uppercase shadow-xl hover:bg-arpaka-accent hover:text-arpaka-white">
+                    VER TODA LA COLECCIÓN
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Footer (Negro Profundo para un cierre de marca fuerte y elegante) --><!-- Clase 'scroll-reveal' añadida para animación --><footer id="contacto" class="bg-arpaka-primary text-arpaka-white p-8 mt-12 scroll-reveal">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+            <div class="mb-4 md:mb-0">
+                <!-- Logo Footer en Acero Suave --><a href="#" class="flex items-center space-x-2 justify-center md:justify-start">
+                    <img src="img/CABEZA CON NOMBRE BANCO.png" alt="ARPAKA 18 Logo de Llama" class="logo-img filter-none" style="height: 30px;">
+                    <p class="font-bold text-xl text-arpaka-accent" style="font-family: 'serif-title', serif;"></p>
+                </a>
+                <p class="text-sm text-gray-400 mt-2">Calidad certificada, tradición viva.</p>
+            </div>
+            <div class="text-sm">
+                <p class="text-lg font-semibold mb-2">Conversemos</p>
+                <p>Instagram: @arpaka18</p>
+                <p>Teléfono: +51 985 352 699</p>
+                <!-- Iconos de Redes Sociales: se actualizó el enlace "Email" con el handle. --><div class="mt-4 space-x-4 flex justify-center md:justify-start">
+                    <!--<a href="#" class="text-arpaka-accent hover:text-gray-400 transition duration-300">Facebook</a>-->
+                    <!-- Enlace de Instagram con el handle solicitado --><a href="https://instagram.com/Arpaka18" target="_blank" class="text-arpaka-accent hover:text-gray-400 transition duration-300">Instagram: @Arpaka18</a>
+                </div>
+            </div>
+        </div>
+        <p class="text-center text-xs mt-6 opacity-50">&copy; 2024 ARPAKA 18. Bitácoras que inspiran.</p>
+    </footer>
+
+    <!-- NOTIFICACIÓN DE CARRITO FIJA (JS) --><div id="notification-bar" class="fixed bottom-5 left-1/2 transform -translate-x-1/2 bg-arpaka-primary text-white py-3 px-6 rounded-full shadow-xl z-50 opacity-0 transition-opacity duration-300">
+        <!-- Contenido generado por JS --></div>
+
+    <!-- 3. BOTÓN CTA FLOTANTE con IMAGEN de llama --><div id="floating-cta" class="fixed bottom-5 right-5 z-40 cursor-pointer">
+        <!-- Contenido generado por JS --></div>
+
+
+    <!-- SCRIPT DE JAVASCRIPT para la barra lateral y dinamismo --><script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. ANIMACIÓN DE TÍTULO AL CARGAR
+            const heroTitle = document.querySelector('.animated-hero-title');
+            if (heroTitle) {
+                // Pequeño retraso para asegurar que la animación sea visible al cargar
+                setTimeout(() => {
+                    heroTitle.classList.add('loaded');
+                }, 100); 
+            }
+
+            // 2. LÓGICA DE BARRA LATERAL (EXISTENTE)
+            const sidebar = document.getElementById('mobile-sidebar');
+            const openBtn = document.getElementById('open-sidebar');
+            const closeBtn = document.getElementById('close-sidebar');
+
+            const toggleSidebar = () => {
+                sidebar.classList.toggle('translate-x-full');
+                sidebar.classList.toggle('translate-x-0');
+            };
+
+            openBtn.addEventListener('click', toggleSidebar);
+            closeBtn.addEventListener('click', toggleSidebar);
+
+            // Cierra la barra lateral al hacer clic en un enlace de navegación
+            document.querySelectorAll('#mobile-sidebar a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (!sidebar.classList.contains('translate-x-full')) {
+                        toggleSidebar();
+                    }
+                });
+            });
+
+            // 3. SCROLL REVEAL (Intersection Observer)
+            const sectionsToObserve = document.querySelectorAll('#experiencia, #galeria, #contacto');
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Hace visible el elemento aplicando la clase 'visible'
+                        entry.target.classList.add('visible');
+                        // Deja de observar el elemento una vez animado
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                rootMargin: '0px',
+                threshold: 0.1 // Se activa cuando el 10% del elemento es visible
+            });
+
+            sectionsToObserve.forEach(section => {
+                // Observa cada sección
+                observer.observe(section);
+            });
+
+
+            // 4. ESTILO DE NAVEGACIÓN DINÁMICO (Sticky Header)
+            const navBar = document.getElementById('main-nav');
+            const heroSection = document.querySelector('.hero-section');
+            const heroHeight = heroSection ? heroSection.offsetHeight : 600; // Altura de respaldo si no se encuentra la sección
+            
+            window.addEventListener('scroll', () => {
+                // Si el usuario se ha desplazado más allá de la sección Hero (menos un offset)
+                if (window.scrollY > heroHeight - 100) { 
+                    // Añade un borde sutil y una sombra más fuerte para destacarse
+                    navBar.classList.add('lg:border-b-2', 'border-arpaka-accent/50', 'shadow-xl');
+                    navBar.classList.remove('shadow-md');
+                } else {
+                    // Restaura el estilo inicial
+                    navBar.classList.remove('lg:border-b-2', 'border-arpaka-accent/50', 'shadow-xl');
+                    navBar.classList.add('shadow-md');
+                }
+            });
+
+
+            // 5. NOTIFICACIÓN DE CARRITO (Modal/Feedback)
+            const notificationBar = document.getElementById('notification-bar');
+            const addButtons = document.querySelectorAll('.add-to-cart-btn');
+
+            const showNotification = (message) => {
+                // 1. Establecer mensaje
+                notificationBar.textContent = message;
+                
+                // 2. Mostrar (haciendo visible)
+                notificationBar.classList.remove('opacity-0');
+                notificationBar.classList.add('opacity-100');
+
+                // 3. Ocultar después de 3 segundos
+                setTimeout(() => {
+                    notificationBar.classList.remove('opacity-100');
+                    notificationBar.classList.add('opacity-0');
+                }, 3000); 
+            };
+
+            addButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    // Encontrar el nombre del producto
+                    const card = e.target.closest('.product-card');
+                    const productName = card ? card.querySelector('h3').textContent.split('(')[0].trim() : 'Producto';
+                    
+                    showNotification(`${productName} en camino...`);
+                });
+            });
+
+
+            // 6. DETALLES EXPANDIBLES DEL PRODUCTO (Didáctico)
+            document.querySelectorAll('.toggle-details').forEach(toggleArea => {
+                const card = toggleArea.closest('.product-card');
+                const details = toggleArea.querySelector('.product-details');
+
+                if (card && details) {
+                    toggleArea.addEventListener('click', (e) => {
+                        // Impedir que el clic en el botón de añadir active el toggle
+                        if (e.target.closest('.add-to-cart-btn')) return;
+                        
+                        // Toggle del estado
+                        const isExpanded = details.getAttribute('data-expanded') === 'true';
+                        
+                        if (isExpanded) {
+                            // Colapsar
+                            details.style.maxHeight = '0';
+                            details.setAttribute('data-expanded', 'false');
+                        } else {
+                            // Expandir: Obtener la altura de desplazamiento (scrollHeight) para la animación fluida
+                            details.style.maxHeight = details.scrollHeight + "px";
+                            details.setAttribute('data-expanded', 'true');
+                        }
+                    });
+                }
+            });
+
+            // 7. CTA FLOTANTE con IMAGEN de llama (MOVIMIENTO CONSTANTE)
+            const floatingCtaContainer = document.getElementById('floating-cta');
+
+            floatingCtaContainer.innerHTML = `
+                <a href="#galeria" class="block">
+                    <div class="bg-arpaka-accent text-arpaka-white p-2 rounded-full shadow-2xl 
+                                w-16 h-16 flex items-center justify-center float-animation 
+                                transition duration-300 hover:scale-110 hover:shadow-arpaka-accent/50">
+                        <!-- Imagen del logo de llama dentro del botón flotante --><img src="img/LOGO COLOR INVERTIDO.png" alt="Ir a la Galería" class="w-full h-full object-contain filter invert opacity-90">
+                    </div>
+                </a>
+            `;
+            
+        });
+    </script>
+</body>
+</html>
