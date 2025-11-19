@@ -87,6 +87,16 @@
             -webkit-backdrop-filter: blur(8px);
         }
 
+        /* 3. ANIMACIÓN DE FLOTACIÓN (Para el CTA fijo) */
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0); }
+        }
+        .float-animation {
+            animation: float 2s ease-in-out infinite;
+        }
+
     </style>
 </head>
 <body class="bg-arpaka-neutral text-arpaka-black font-sans">
@@ -206,6 +216,10 @@
                     <a href="#" class="text-arpaka-accent hover:text-gray-400 transition duration-300"></a>
                     <a href="https://instagram.com/Arpaka18" target="_blank" class="text-arpaka-accent hover:text-gray-400 transition duration-300">Instagram: @Arpaka18</a>
                 </div>
+
+                <!-- 3. BOTÓN CTA FLOTANTE con IMAGEN de llama --><div id="floating-cta" class="fixed bottom-5 right-5 z-40 cursor-pointer">
+        <!-- Contenido generado por JS --></div>
+
             </div>
         </div>
         <p class="text-center text-xs mt-6 opacity-50">&copy; 2024 ARPAKA 18. Bitácoras que inspiran.</p>
@@ -357,8 +371,21 @@
                 e.preventDefault();
                 document.getElementById('product-filters').scrollIntoView({ behavior: 'smooth' });
             });
+            // 7. CTA FLOTANTE con IMAGEN de llama (MOVIMIENTO CONSTANTE)
+            const floatingCtaContainer = document.getElementById('floating-cta');
+
+            floatingCtaContainer.innerHTML = `
+                <a href="#galeria" class="block">
+                    <div class="bg-arpaka-accent text-arpaka-white p-2 rounded-full shadow-2xl 
+                                w-16 h-16 flex items-center justify-center float-animation 
+                                transition duration-300 hover:scale-110 hover:shadow-arpaka-accent/50">
+                        <!-- Imagen del logo de llama dentro del botón flotante --><img src="img/LOGO COLOR INVERTIDO.png" alt="Ir a la Galería" class="w-full h-full object-contain filter invert opacity-90">
+                    </div>
+                </a>
+            `;
         });
     
     </script>
+    
 </body>
 </html>
