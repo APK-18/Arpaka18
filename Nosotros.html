@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARPAKA 18 | Bitácoras</title>
+    <!-- Favicon -->
+    <link rel="icon" href="IMG/CABEZA BLANCO ICO.ico">
+    <!-- Carga de fuentes profesionales (Open Sans y Playfair Display) -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900;1,400..900&display=swap" rel="stylesheet">
+    <!-- Carga de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Incluimos Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Animación para el Hero Text: Fade-in sutil y movimiento ligero */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .hero-text-animation {
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        /* Animación de la Llama (CTA flotante) - movimiento vertical suave */
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-5px) rotate(1deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        .float-animation {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Estilos base para scroll suave */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Estilos de la Línea de Tiempo (Timeline) */
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        /* La línea vertical central */
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 3px;
+            background-color: #E0E0E0; /* Gris sutil */
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1.5px;
+            z-index: 0;
+        }
+        /* Contenedor de cada evento */
+        .timeline-container {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+        }
+        /* Círculo de acento en el medio */
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -13px;
+            background-color: #F8F8F8; /* arpaka-neutral */
+            border: 3px solid #EFA523; /* arpaka-accent */
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        /* Colocación de los contenedores a la izquierda */
+        .left {
+            left: 0;
+        }
+        /* Colocación de los contenedores a la derecha */
+        .right {
+            left: 50%;
+        }
+        /* Flechas (Triángulos) para contenedores de la izquierda */
+        .left::before {
+            content: " ";
+            height: 0;
+            position: absolute;
+            top: 22px;
+            width: 0;
+            z-index: 1;
+            right: 30px;
+            border: medium solid white;
+            border-width: 10px 0 10px 10px;
+            border-color: transparent transparent transparent white;
+        }
+        /* Flechas (Triángulos) para contenedores de la derecha */
+        .right::before {
+            content: " ";
+            height: 0;
+            position: absolute;
+            top: 22px;
+            width: 0;
+            z-index: 1;
+            left: 30px;
+            border: medium solid white;
+            border-width: 10px 10px 10px 0;
+            border-color: transparent white transparent transparent;
+        }
+        /* Círculo de acento para contenedores de la derecha */
+        .right::after {
+            left: -12px;
+        }
+        /* Media query para hacer el timeline responsivo (en móvil) */
+        @media screen and (max-width: 768px) {
+            .timeline::after {
+                left: 31px; /* Mueve la línea al lado izquierdo */
+            }
+            .timeline-container {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            .timeline-container::before {
+                left: 60px; /* Mueve la flecha */
+                border: medium solid white;
+                border-width: 10px 10px 10px 0;
+                border-color: transparent white transparent transparent;
+            }
+            .left::after, .right::after {
+                left: 18px; /* Mueve el círculo */
+            }
+            .right {
+                left: 0%; /* Mueve el contenedor derecho a la izquierda */
+            }
+        }
+    </style>
+
+    <script>
+        // Personalización de colores (Consistente con el diseño original)
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // Paleta Sobria
+                        'arpaka-primary': '#1A1A1A',      // Negro Profundo (Dominante para texto y CTAs)
+                        'arpaka-accent': '#EFA523',      // Dorado/Acero Muted (Acento de marca)
+                        
+                        'arpaka-black': '#1A1A1A',       // Profundo para elementos
+                        'arpaka-white': '#FFFFFF',       // Blanco puro
+                        'arpaka-neutral': '#F8F8F8',     // Gris muy claro para fondos de sección
+                    },
+                    fontFamily: {
+                        // Fuente principal para texto (Sans Serif)
+                        'sans': ['Open Sans', 'sans-serif'],
+                        // Fuente para títulos y elementos destacados (Serif)
+                        'serif': ['Playfair Display', 'serif'],
+                    },
+                    boxShadow: {
+                        'soft-dark': '0 10px 15px -3px rgba(26, 26, 26, 0.1), 0 4px 6px -2px rgba(26, 26, 26, 0.05)',
+                    }
+                }
+            }
+        };
+    </script>
+</head>
+<body class="bg-arpaka-white text-arpaka-black font-sans min-h-screen">
+
+    <!-- 1. BARRA DE NAVEGACIÓN (HEADER) -->
+    <header class="sticky top-0 z-50 bg-arpaka-white shadow-md border-b border-arpaka-neutral">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <!-- Logo/Nombre de Marca -->
+            <a href="index.html" class="flex items-center space-x-2">
+                <img src="IMG/CABEZA CON NOMBRE.png" onerror="this.onerror=null; this.src='https://placehold.co/40x40/F8F8F8/1A1A1A?text=Logo';" alt="ARPAKA 18 Logo" class="h-8 w-auto">
+                <span class="font-serif text-xl font-bold text-arpaka-primary tracking-wider hidden sm:block">ARPAKA 18</span>
+            </a>
+
+            <!-- Navegación Principal (Desktop) -->
+            <nav class="hidden md:flex space-x-8">
+                <a href="index.html" class="text-arpaka-black hover:text-arpaka-accent transition duration-300 font-semibold">Bitácoras</a>
+                <!-- Link Activo -->
+                <a href="#hero" class="text-arpaka-accent font-extrabold border-b-2 border-arpaka-accent pb-1">Nosotros</a>
+                <a href="#contacto" class="text-arpaka-black hover:text-arpaka-accent transition duration-300 font-semibold">Contacto</a>
+            </nav>
+
+            <!-- Botón de Menú (Mobile) -->
+            <button id="open-sidebar" class="md:hidden text-arpaka-primary p-2 rounded-lg hover:bg-arpaka-neutral transition duration-200">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- 2. SIDEBAR MOBILE (Menú desplegable) -->
+    <div id="mobile-sidebar" class="fixed inset-y-0 right-0 z-50 w-64 bg-arpaka-primary text-arpaka-white transform translate-x-full transition-transform duration-300 shadow-2xl md:hidden">
+        <div class="p-6 flex flex-col h-full">
+            <!-- Botón de Cerrar -->
+            <div class="flex justify-end mb-8">
+                <button id="close-sidebar" class="text-arpaka-white p-2 rounded-lg hover:bg-gray-700 transition duration-200">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <!-- Links de Navegación -->
+            <nav class="flex flex-col space-y-6 text-lg font-serif">
+                <a href="index.html" class="hover:text-arpaka-accent transition duration-300">Bitácoras</a>
+                <a href="#hero" class="text-arpaka-accent border-l-4 border-arpaka-accent pl-2">Nosotros</a>
+                <a href="#contacto" class="hover:text-arpaka-accent transition duration-300">Contacto</a>
+            </nav>
+            <div class="mt-auto pt-8 border-t border-gray-700">
+                <p class="text-sm opacity-60">ARPAKA 18 - Bitácoras que inspiran.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. CONTENIDO PRINCIPAL DE LA SECCIÓN NOSOTROS -->
+    <main class="min-h-[calc(100vh-10rem)]">
+        
+        <!-- Hero Section: Introducción y Manifiesto -->
+        <section id="hero" class="relative bg-arpaka-neutral py-20 md:py-28 overflow-hidden">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl grid grid-cols-1 md:grid-cols-2 items-center gap-12">
+                <!-- Columna de Texto -->
+                <div class="text-center md:text-left">
+                    <h1 class="font-serif text-5xl md:text-6xl font-bold text-arpaka-primary mb-4 leading-tight hero-text-animation" style="animation-delay: 0.1s;">
+                        El Legado de la <span class="text-arpaka-accent">Bitácora</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-arpaka-black/80 mb-6 hero-text-animation" style="animation-delay: 0.3s;">
+                        ARPAKA 18 nació de una profunda admiración por la tradición textil peruana y la necesidad de un espacio donde las ideas puedan florecer con permanencia. Cada cuaderno es un puente entre la artesanía ancestral y el pensamiento contemporáneo.
+                    </p>
+                    <a href="#historia" class="inline-block px-8 py-3 bg-arpaka-accent text-arpaka-primary font-bold rounded-full text-lg shadow-soft-dark hover:bg-yellow-600 transition duration-300 transform hover:scale-105 hero-text-animation" style="animation-delay: 0.5s;">
+                        Ver Nuestra Trayectoria
+                    </a>
+                </div>
+                <!-- Columna de Imagen (Placeholder visual) -->
+                <div class="hidden md:block">
+                    <img src="https://placehold.co/600x400/EFA523/1A1A1A?text=Filosofía+ARPAKA" alt="Filosofía ARPAKA 18" class="rounded-xl shadow-2xl border-4 border-arpaka-white transform hover:scale-[1.02] transition duration-500">
+                </div>
+            </div>
+        </section>
+
+        <!-- Misión, Visión y Valores (Mejorado con Icons y Layout) -->
+        <section id="mision-vision-valores" class="py-16 md:py-24 bg-arpaka-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+                <h2 class="font-serif text-4xl font-bold text-center mb-12 text-arpaka-primary">Nuestros Pilares</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    
+                    <!-- Misión -->
+                    <div class="flex flex-col p-6 rounded-xl bg-arpaka-neutral shadow-lg border-t-4 border-arpaka-accent hover:shadow-xl transition duration-500">
+                        <i data-lucide="compass" class="w-10 h-10 text-arpaka-accent mb-4"></i>
+                        <h3 class="font-serif text-2xl font-semibold mb-3 text-arpaka-primary">Misión</h3>
+                        <p class="text-base text-arpaka-black/80">
+                            Proveer herramientas de documentación que inspiren la creatividad y aseguren la durabilidad del legado escrito, combinando diseño atemporal y la excelencia de la artesanía peruana.
+                        </p>
+                    </div>
+
+                    <!-- Visión -->
+                    <div class="flex flex-col p-6 rounded-xl bg-arpaka-neutral shadow-lg border-t-4 border-arpaka-accent hover:shadow-xl transition duration-500">
+                        <i data-lucide="eye" class="w-10 h-10 text-arpaka-accent mb-4"></i>
+                        <h3 class="font-serif text-2xl font-semibold mb-3 text-arpaka-primary">Visión</h3>
+                        <p class="text-base text-arpaka-black/80">
+                            Ser el referente de lujo en artículos de papelería en Latinoamérica, reconocidos por el compromiso inquebrantable con la calidad, la sostenibilidad y la expresión del arte.
+                        </p>
+                    </div>
+
+                    <!-- Valor Principal: Artesanía -->
+                    <div class="flex flex-col p-6 rounded-xl bg-arpaka-neutral shadow-lg border-t-4 border-arpaka-accent hover:shadow-xl transition duration-500">
+                        <i data-lucide="hand-metal" class="w-10 h-10 text-arpaka-accent mb-4"></i>
+                        <h3 class="font-serif text-2xl font-semibold mb-3 text-arpaka-primary">Artesanía</h3>
+                        <p class="text-base text-arpaka-black/80">
+                            Respeto por el proceso manual. Cada costura, cada encuadernación y cada detalle es revisado por manos expertas, garantizando un producto con alma propia.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Línea de Tiempo (Nuestra Historia) -->
+        <section id="historia" class="py-16 md:py-24 bg-arpaka-neutral border-t border-b border-gray-200">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl text-center">
+                <h2 class="font-serif text-4xl font-bold mb-16 text-arpaka-primary">Nuestra Trayectoria</h2>
+                
+                <div class="timeline">
+                    
+                    <!-- Evento 1: Fundación -->
+                    <div class="timeline-container left">
+                        <div class="content bg-arpaka-white p-6 rounded-lg shadow-lg">
+                            <h3 class="font-serif text-2xl font-bold text-arpaka-accent mb-2">2018: La Semilla</h3>
+                            <p class="text-base text-arpaka-black/80">
+                                Fundación de ARPAKA 18 en Lima, Perú, con la visión de elevar la humilde bitácora a un objeto de arte funcional. Enfoque inicial en la selección de papeles resistentes a la pluma.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Evento 2: Primer Diseño -->
+                    <div class="timeline-container right">
+                        <div class="content bg-arpaka-white p-6 rounded-lg shadow-lg">
+                            <h3 class="font-serif text-2xl font-bold text-arpaka-accent mb-2">2019: Diseño 180º</h3>
+                            <p class="text-base text-arpaka-black/80">
+                                Introducción de la encuadernación con apertura de 180 grados, un sello distintivo de la marca que garantiza comodidad total al escribir o dibujar en cualquier página.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Evento 3: Expansión -->
+                    <div class="timeline-container left">
+                        <div class="content bg-arpaka-white p-6 rounded-lg shadow-lg">
+                            <h3 class="font-serif text-2xl font-bold text-arpaka-accent mb-2">2021: Colección Premium</h3>
+                            <p class="text-base text-arpaka-black/80">
+                                Lanzamiento de la línea "Executive", incorporando tapas de cuero ecológico y papeles de mayor gramaje (100gr-120gr), consolidando nuestra posición en el mercado de lujo.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Evento 4: Sostenibilidad -->
+                    <div class="timeline-container right">
+                        <div class="content bg-arpaka-white p-6 rounded-lg shadow-lg">
+                            <h3 class="font-serif text-2xl font-bold text-arpaka-accent mb-2">Hoy: El Compromiso</h3>
+                            <p class="text-base text-arpaka-black/80">
+                                Manteniendo la producción local y artesanal. Nuestro compromiso es crecer manteniendo la sostenibilidad y el respeto por el proceso, pieza por pieza.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        
+        <!-- Sección Call-to-Action / Humanización -->
+        <section class="py-20 md:py-24 text-center bg-arpaka-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+                <h2 class="font-serif text-4xl font-bold mb-4 text-arpaka-primary">Conoce a Quienes Hacen Posible ARPAKA</h2>
+                <p class="text-xl text-arpaka-black/80 mb-8">
+                    Detrás de cada bitácora hay un equipo de artesanos, diseñadores y visionarios. Nuestro trabajo es un tributo a la paciencia y la perfección.
+                </p>
+                <div class="relative w-full max-w-md mx-auto rounded-xl overflow-hidden shadow-2xl">
+                    <img src="https://placehold.co/800x500/1A1A1A/EFA523?text=Nuestros+Artesanos" alt="Imagen del equipo o artesanos" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-arpaka-primary/30 flex items-end justify-center p-6">
+                        <span class="text-arpaka-white text-lg font-bold">Hecho con el alma en Perú.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Contacto (Sección de Cierre) -->
+        <section id="contacto" class="py-20 md:py-32 text-center bg-arpaka-neutral border-t border-gray-300">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
+                <h2 class="font-serif text-4xl font-bold mb-4 text-arpaka-primary">Contacta al Equipo ARPAKA</h2>
+                <p class="text-xl text-arpaka-black/80 mb-8">
+                    Para consultas de prensa, colaboraciones o pedidos especiales, estamos a su disposición.
+                </p>
+                <a href="mailto:contacto@arpaka18.com" class="inline-block px-10 py-4 bg-arpaka-primary text-arpaka-white font-bold rounded-full text-lg shadow-soft-dark hover:bg-gray-700 transition duration-300 transform hover:scale-105">
+                    Envíanos un Correo
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 4. CTA FLOTANTE con IMAGEN de Llama (MOVIMIENTO CONSTANTE) -->
+    <div id="floating-cta" class="fixed bottom-6 right-6 z-40">
+        <!-- El contenido se inyecta con JS para el efecto flotante -->
+    </div>
+
+    <!-- 5. PIE DE PÁGINA (FOOTER) -->
+    <footer class="bg-arpaka-primary text-arpaka-neutral py-10">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 border-b border-gray-700 pb-8 mb-6">
+                
+                <!-- Columna 1: Logo y Slogan -->
+                <div>
+                    <img src="IMG/CABEZA CON NOMBRE BLANCO.png" onerror="this.onerror=null; this.src='https://placehold.co/40x40/1A1A1A/FFFFFF?text=ARPAKA';" alt="ARPAKA 18 Logo" class="h-10 w-auto filter opacity-80 mb-3">
+                    <p class="text-sm text-arpaka-accent font-serif mb-2">Bitácoras que inspiran.</p>
+                    <p class="text-xs text-gray-400">Hecho a mano en Perú.</p>
+                </div>
+
+                <!-- Columna 2: Navegación Rápida -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-3 text-arpaka-white">Navegación</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="index.html" class="hover:text-arpaka-accent transition duration-300">Bitácoras</a></li>
+                        <li><a href="#hero" class="text-arpaka-accent font-bold">Nosotros</a></li>
+                        <li><a href="#contacto" class="hover:text-arpaka-accent transition duration-300">Contacto</a></li>
+                    </ul>
+                </div>
+
+                <!-- Columna 3: Síguenos -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-3 text-arpaka-white">Comunidad</h4>
+                    <div class="flex flex-col space-y-2 text-sm">
+                        <a href="https://instagram.com/Arpaka18" target="_blank" class="hover:text-arpaka-accent transition duration-300">Instagram: @Arpaka18</a>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center text-xs opacity-50 text-gray-400">&copy; 2024 ARPAKA 18. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- 6. SCRIPT DE JAVASCRIPT para la sidebar y CTA -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Inicializar Lucide Icons
+            lucide.createIcons();
+
+            // --- Lógica de la Sidebar Mobile ---
+            const sidebar = document.getElementById('mobile-sidebar');
+            const openBtn = document.getElementById('open-sidebar');
+            const closeBtn = document.getElementById('close-sidebar');
+
+            const toggleSidebar = () => {
+                sidebar.classList.toggle('translate-x-full');
+                sidebar.classList.toggle('translate-x-0');
+            };
+
+            openBtn.addEventListener('click', toggleSidebar);
+            closeBtn.addEventListener('click', toggleSidebar);
+
+            // Cierra la sidebar al hacer clic en un enlace interno
+            document.querySelectorAll('#mobile-sidebar a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (sidebar.classList.contains('translate-x-0')) {
+                        toggleSidebar();
+                    }
+                });
+            });
+
+
+            // --- Lógica del CTA FLOTANTE con IMAGEN de llama ---
+            const floatingCtaContainer = document.getElementById('floating-cta');
+
+            // Generamos el contenido del CTA
+            floatingCtaContainer.innerHTML = `
+                <a href="#contacto" aria-label="Ir a Contacto" class="block">
+                    <div class="bg-arpaka-accent text-arpaka-white p-3 rounded-full shadow-2xl 
+                                w-14 h-14 flex items-center justify-center float-animation 
+                                transition duration-300 hover:scale-110 hover:shadow-arpaka-accent/50 cursor-pointer">
+                        <!-- Icono de contacto/pregunta -->
+                        <i data-lucide="mail" class="w-8 h-8 text-arpaka-primary"></i>
+                    </div>
+                </a>
+            `;
+
+            // Volver a inicializar los íconos de Lucide si inyectamos HTML después del DOMContentLoaded
+            lucide.createIcons();
+            
+        });
+    </script>
+</body>
+</html>
