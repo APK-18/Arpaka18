@@ -101,48 +101,52 @@
 </head>
 <body class="bg-arpaka-neutral text-arpaka-black font-sans">
 
-    <aside id="mobile-sidebar" class="fixed top-0 right-0 h-full w-64 sm:w-80 sidebar-blur z-50 transform translate-x-full transition-transform duration-300 shadow-2xl border-l border-gray-200">
-        <div class="p-6 sm:p-8 h-full flex flex-col">
-            
-            <div class="flex justify-end mb-10">
-                <button id="close-sidebar" class="text-arpaka-primary hover:text-arpaka-accent transition p-1 rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+  <!-- BARRA LATERAL DESPLEGABLE (MOBILE/TABLET) --><aside id="mobile-sidebar" class="fixed top-0 right-0 h-full w-64 md:w-80 bg-white/90 backdrop-blur-md z-50 transform translate-x-full transition-transform duration-300 shadow-2xl">
+        <div class="p-6 h-full flex flex-col">
+            <!-- Encabezado y botón de cierre --><div class="flex justify-between items-center mb-10 border-b pb-4">
+                <h3 class="text-2xl font-bold text-arpaka-accent" style="font-family: 'serif-title', serif;">Arpaka18</h3>
+                <!-- Botón de cierre usando un SVG de Lucide --><button id="close-sidebar" class="text-arpaka-primary hover:text-arpaka-accent transition p-1 rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
                 </button>
             </div>
             
-            <nav class="flex flex-col space-y-6 text-xl font-medium mb-auto">
-                <a href="#" class="text-arpaka-accent font-semibold transition hover:pl-2">Galería (Actual)</a>
-                <a href="#" class="text-arpaka-black hover:text-arpaka-accent transition hover:pl-2">Nosotros</a>
-                <a href="#contacto" class="text-arpaka-black hover:text-arpaka-accent transition hover:pl-2">Contacto</a>
-            </nav>
-
-            <div class="mt-8 pt-4 border-t border-gray-200">
-                <a href="#" class="bg-arpaka-primary text-arpaka-white cta-button font-bold py-3 px-4 rounded-full text-lg text-center w-full block hover:bg-arpaka-accent">
-                    
+            <!-- Enlaces de navegación principales --><nav class="flex flex-col space-y-6 text-xl font-medium mb-auto">
+                <a href="index.html" class="text-arpaka-black hover:text-arpaka-accent transition border-b pb-2">Home</a>
+                <a href="Nosotros.html" class="text-arpaka-black hover:text-arpaka-accent transition border-b pb-2">Nosotros</a>
+                <a href="#" class="text-arpaka-black hover:text-arpaka-accent transition border-b pb-2">Puntos de venta</a>
+                <!-- CTA del menú lateral --><a href="Galería.html" class="bg-arpaka-accent text-arpaka-white cta-button font-bold py-3 px-4 rounded-lg text-base text-center hover:bg-arpaka-primary mt-4">
+                    Productos
                 </a>
+            </nav>
+            
+            <!-- Información de contacto y redes sociales (Parte inferior) --><div class="pt-6 border-t">
+                <p class="text-lg font-semibold mb-3 text-arpaka-primary">Redes Sociales</p>
+                <div class="flex flex-col space-y-3 text-sm">
+                    <a href="#" class="text-gray-700 hover:text-arpaka-accent transition duration-300"></a>
+                    <a href="https://instagram.com/Arpaka18" target="_blank" class="text-gray-700 hover:text-arpaka-accent transition duration-300">Instagram: @Arpaka18</a>
+                    <p class="mt-4 text-xs text-gray-500">Email: info@arpaka18.pe</p>
+                </div>
             </div>
         </div>
     </aside>
 
-    <nav id="main-nav" class="bg-arpaka-white sticky top-0 z-40 shadow-xl h-18">
+    <!-- 1. Navegación Fija (Limpia y Simple) --><!-- ID 'main-nav' añadido para el control de estilo por scroll en JS --><nav id="main-nav" class="bg-arpaka-white sticky top-0 z-30 shadow-md transition-shadow duration-300">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="index.html" class="flex items-center space-x-2">
+            <!-- Logo de Llama en la navegación --><a href="index.html" class="flex items-center space-x-2">
                 <img src="img/CABEZA CON NOMBRE.png" alt="ARPAKA 18 Logo de Llama" class="logo-img">
                 <h1 class="text-3xl font-bold text-arpaka-accent" style="font-family: 'serif-title', serif;"></h1>
             </a>
             
-            <div class="hidden lg:flex space-x-10 text-lg font-medium">
-                <a href="#" class="text-arpaka-accent font-semibold transition hover:underline underline-offset-4">Galería</a>
-                <a href="#" class="text-arpaka-black hover:text-arpaka-accent transition hover:underline underline-offset-4">Nosotros</a>
-                <a href="#contacto" class="text-arpaka-black hover:text-arpaka-accent transition hover:underline underline-offset-4">Contacto</a>
+            <!-- Enlaces de Navegación (Solo Desktop) --><div class="hidden lg:flex space-x-8 text-lg font-medium">
+                <a href="index.html" class="text-arpaka-black hover:text-arpaka-accent transition">Home</a>
+                <a href="Nosotros.html" class="text-arpaka-black hover:text-arpaka-accent transition">Nosotros</a>
+                <a href="#contacto" class="text-arpaka-black hover:text-arpaka-accent transition">Contacto</a>
             </div>
             
-            <div class="flex items-center space-x-4">
-                <button class="hidden lg:block bg-arpaka-primary text-arpaka-white cta-button font-bold py-2.5 px-6 rounded-full text-base hover:bg-arpaka-accent">
-                    
-                </button>
+            <!-- Controles a la derecha: CTA (Desktop) y Botón de Menú (Mobile) --><div class="flex items-center space-x-4">
+                <!-- Botón CTA en Negro Profundo (Desktop) --><a href="Galería.html" class="hidden lg:block bg-arpaka-primary text-arpaka-white cta-button font-bold py-2 px-4 rounded-full text-base hover:bg-arpaka-accent text-center inline-block"> Productos </a>
                 
-                <button id="open-sidebar" class="lg:hidden text-arpaka-primary hover:text-arpaka-accent transition p-1">
+                <!-- Botón de Menú Hamburguesa (Mobile/Tablet) --><button id="open-sidebar" class="lg:hidden text-arpaka-primary hover:text-arpaka-accent transition p-1">
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
                 </button>
             </div>
