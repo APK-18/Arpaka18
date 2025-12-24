@@ -1,0 +1,100 @@
+body{
+    
+.nunito-<uniquifier> {
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+}
+}
+
+/* Estilos personalizados */
+
+        .product-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            border: 1px solid #E0E0E0;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            /* Sombra sutil y elegante en tono oscuro */
+            box-shadow: 0 10px 20px rgba(26, 26, 26, 0.15);
+        }
+
+        /* Estilo para el botón CTA con animación de calidad */
+        .cta-button {
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            /* Sombra más marcada para un look premium */
+        }
+        .cta-button:hover {
+            transform: translateY(-2px);
+            /* Al hacer hover, se usa el acento suave */
+            background-color: #EFA523; 
+            color: #FFFFFF;
+        }
+
+        /* Estilo para la sección Hero: Fondo Blanco/Neutral con Imagen de Estudio */
+        .hero-section {
+            background-color: #F8F8F8; /* Fondo neutral limpio */
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Clase para los iconos de la sección de características */
+        .icon-box {
+            /* Borde con el color de acento (Acero Suave) */
+            border: 2px solid #A38E75;
+            padding: 1rem;
+            border-radius: 9999px; /* fully rounded */
+        }
+        /* Ajuste para el logo si es necesario */
+        .logo-img {
+            height: 40px; /* Ajusta la altura del logo según el diseño */
+            width: auto;
+            filter: invert(7%); /* Invierte el color para que se vea oscuro sobre claro */
+        }
+
+        /* ESTILOS DE DINAMISMO - SCROLL REVEAL (JS) */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 1. ANIMACIÓN DE TÍTULO AL CARGAR */
+        .animated-hero-title {
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+        }
+        .animated-hero-title.loaded {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 2. ESTILO PARA DETALLES EXPANDIBLES (Didáctico) */
+        .product-details {
+            /* Estado inicial colapsado */
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
+            padding-top: 0;
+        }
+        .product-details.expanded {
+            /* La altura será establecida por JS, solo aseguramos la transición */
+            padding-top: 1rem; 
+        }
+
+        /* 3. ANIMACIÓN DE FLOTACIÓN (Para el CTA fijo) */
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0); }
+        }
+        .float-animation {
+            animation: float 2s ease-in-out infinite;
+        }
