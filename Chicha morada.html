@@ -65,6 +65,31 @@
             animation: float 2s ease-in-out infinite;
         }
         
+        /* TIPOS DE DISPOSITIVO */
+        @media (max-width:767px){
+            .desktop{
+                display: none;
+            }
+            .tablet {
+                display: none;
+            }
+        }
+        @media (min-width:768px) and (max-width:990px) {
+            .desktop{
+                display: none;
+            }
+            .movil{
+                display: none;
+            }
+        }
+        @media (min-width:991px) {
+            .movil{
+                display: none;
+            }
+            .tablet {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body class="bg-arpaka-neutral text-arpaka-black font-sans">
@@ -176,14 +201,32 @@
                     <p class="text-xl text-arpaka-accent font-semibold">Cuadernillo vertical / 80gr</p>
                     <h2 class="text-5xl font-extrabold text-arpaka-primary mt-2" style="font-family: 'serif-title', serif;">Chicha Morada</h2>
                 </div>
-
+               
                 <!-- Precio y CTA -->
                 <div class="flex items-center justify-between">
+                    <div class="desktop">
                     <span class="text-4xl font-extrabold text-arpaka-primary">Desde S/ 14.99</span>
-                    <div class="flex space-x-3">
-                        <a href="https://api.whatsapp.com/send?phone=985352699&text=¡¡¡ Lo quiero, quiero una bitácora de Chicha Morada !!!" class="bg-arpaka-primary text-arpaka-white cta-button font-bold py-2 px-7 rounded-full text-1xl hover:bg-arpaka-accent add-to-cart-btn"> Lo quiero</a>
+            </div>
+            <div class="tablet">
+                    <span class="text-2xl font-extrabold text-arpaka-primary">Desde S/ 14.99</span>
+            </div>
+            <div class="movil">
+                    <span class="text-1xl font-extrabold text-arpaka-primary">Desde S/ 14.99</span>
+            </div>
+                    <div class="desktop">
+                        <a href="https://api.whatsapp.com/send?phone=985352699&text=¡¡¡ Lo quiero, quiero una bitácora de Chicha Morada !!!"
+                        class="bg-arpaka-primary text-arpaka-white cta-button font-bold py-2 px-7 rounded-full text-1xl hover:bg-arpaka-accent add-to-cart-btn"> Lo quiero</a>
+                    </div>
+                    <div class="tablet">
+                        <a href="https://api.whatsapp.com/send?phone=985352699&text=¡¡¡ Lo quiero, quiero una bitácora de Chicha Morada !!!"
+                        class="bg-arpaka-primary text-arpaka-white cta-button font-bold py-2 px-7 rounded-full text-1xl hover:bg-arpaka-accent add-to-cart-btn"> Lo quiero</a>
+                    </div>
+                    <div class="movil">
+                        <a href="https://api.whatsapp.com/send?phone=985352699&text=¡¡¡ Lo quiero, quiero una bitácora de Chicha Morada !!!"
+                        class="text-xs font-extrabold bg-arpaka-primary text-arpaka-white cta-button font-bold py-2 px-7 rounded-full text-1xl hover:bg-arpaka-accent add-to-cart-btn"> Lo quiero</a>
                     </div>
                 </div>
+                
 
                 <!-- Descripción Larga
                 <div class="pt-4 border-t">
@@ -218,7 +261,7 @@
                 
                 <!-- Información de Garantía/Envío -->
                 <div class="pt-6 border-t border-gray-200 text-sm text-gray-500 italic">
-                    <p>Envío disponible en lima. Garantía de ARPAKA 18.</p>
+                    <p>Envíos a todo el Perú.</p>
                 </div>
             </div>
         </div>
@@ -233,7 +276,7 @@
                     <img src="img/CABEZA CON NOMBRE BANCO.png" alt="ARPAKA 18 Logo de Llama" class="logo-img filter-none" style="height: 30px;">
                     <p class="font-bold text-xl text-arpaka-accent" style="font-family: 'serif-title', serif;"></p>
                 </a>
-                <p class="text-sm text-gray-400 mt-2">Calidad certificada, tradición viva.</p>
+                <p class="text-sm text-gray-400 mt-2">Calidad asegurada por mi, tradición viva.</p>
             </div>
             <div class="text-sm">
                 <p class="text-lg font-semibold mb-2">Conversemos</p>
