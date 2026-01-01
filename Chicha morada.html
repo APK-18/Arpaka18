@@ -95,6 +95,31 @@
                 display: none;
             }
         }
+        .size-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .size-card.active {
+            border-color: #A38E75;
+            background-color: #fff;
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px -5px rgba(163, 142, 117, 0.3);
+        }
+        .price-pop {
+            animation: pop 0.3s ease-out;
+        }
+        @keyframes pop {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .shimmer {
+            background: linear-gradient(90deg, #f0f0f0 25%, #f8f8f8 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
     </style>
 </head>
 <body class="bg-arpaka-neutral text-arpaka-black font-sans">
@@ -166,7 +191,7 @@
                 <div class="bg-gray-100 rounded-lg overflow-hidden shadow-inner border border-gray-200">
                     <!-- Imagen principal -->
                     <img id="main-product-image" 
-                         src="img/bitacoras/chiclito/CHICLITO1.jpeg" 
+                         src="img/bitacoras/chiclito/CHICLITO2.jpeg" 
                          alt="Bitácora Chiclito" 
                          class="w-full h-auto object-cover rounded-lg aspect-square transition-opacity duration-300">
                 </div>
@@ -176,24 +201,24 @@
                     
                     <!-- Miniatura 1 (Fondo) -->
                     <div class="thumbnail active w-20 h-20 bg-gray-200 rounded-lg cursor-pointer hover:ring-2 ring-arpaka-accent transition duration-150"
-                         data-image-src="img/bitacoras/chiclito/CHICLITO1.jpeg"
+                         data-image-src="img/bitacoras/chiclito/CHICLITO2.jpeg"
                          data-image-alt="Bitácora Chiclito">
-                        <img src="img/bitacoras/chiclito/CHICLITO1.jpeg" class="w-full h-full object-cover rounded-lg" />
+                        <img src="img/bitacoras/chiclito/CHICLITO2.jpeg" class="w-full h-full object-cover rounded-lg" />
                     </div>
                     
                     <!-- Miniatura 2 (Vista Interior) -->
                     <div class="thumbnail w-20 h-20 bg-gray-200 rounded-lg cursor-pointer hover:ring-2 ring-arpaka-accent transition duration-150"
-                         data-image-src="img/bitacoras/chiclito/CHICLITO2.jpeg"
+                         data-image-src="img/bitacoras/chiclito/CHICLITO4.jpeg"
                          data-image-alt="Bitácora Inti Raymi (Tan) - Vista Interior">
-                        <img src="img/bitacoras/chiclito/CHICLITO2.jpeg" class="w-full h-full object-cover rounded-lg" />
+                        <img src="img/bitacoras/chiclito/CHICLITO4.jpeg" class="w-full h-full object-cover rounded-lg" />
                     </div>
             
 
                     <!-- Miniatura 4 (Empaque) -->
                     <div class="thumbnail w-20 h-20 bg-gray-200 rounded-lg cursor-pointer hover:ring-2 ring-arpaka-accent transition duration-150"
-                         data-image-src="img/bitacoras/chiclito/CHICLITO4.jpeg"
+                         data-image-src="img/bitacoras/chiclito/CHICLITO1.jpeg"
                          data-image-alt="Bitácora Inti Raymi (Tan) - Empaque">
-                        <img src="img/bitacoras/chiclito/CHICLITO4.jpeg" class="w-full h-full object-cover rounded-lg" />
+                        <img src="img/bitacoras/chiclito/CHICLITO1.jpeg" class="w-full h-full object-cover rounded-lg" />
                     </div>
                 </div>
             </div>
@@ -242,12 +267,12 @@
                 </div> -->
 
                 <!-- Especificaciones Técnicas de desktop-->
-                <div class="desktop pt-6 border-t border-dashed border-gray-300">
+                <div class="desktop">
                     <h3 class="text-2xl font-bold mb-4 text-arpaka-primary">Ficha Técnica</h3>
                     <ul class="text-lg space-y-3 text-gray-700">
                         <li class="flex items-center space-x-3">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A38E75" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-maximize"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
-                            <span class="font-semibold">Formato:</span><span> A5 (148 x 210 mm) y A6 (105 x 148 mm)</span>
+                            <span class="font-semibold">Formato:</span><span> A5 (148x210 mm) y A6 (105x148 mm)</span>
                         </li>
                         <li class="flex items-center space-x-3">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A38E75" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open-check"><path d="M8 2h8a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><path d="M10 12l2 2l4-4"/></svg>
@@ -255,60 +280,17 @@
                         </li>
                         <li class="flex items-center space-x-3">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A38E75" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-hand-metal"><path d="M18 12.5V10l-4.5-4.5"/><path d="m14 10-1.5 5.5"/><path d="m13 10-2-6.5"/><path d="M10 20.5a5 5 0 0 1-10 0v-5a5 5 0 0 1 10 0"/><path d="M18 20.5a5 5 0 0 1-10 0v-5a5 5 0 0 1 10 0"/></svg>
-                            <span class="font-semibold">Encuadernación:</span><span style="font-size: 15px;">Cosida a mano</span> 
+                            <span class="font-semibold">Encuadernación:</span><span>Cosida a mano</span> 
                         </li>
                         <li class="flex items-center space-x-3">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A38E75" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20"/><path d="M2 12h20"/></svg>
-                            <span class="font-semibold">Origen:</span><span>Hecho en Perú</span>
+                            <span class="font-semibold">Origen:</span><span >Hecho en Perú</span>
                         </li>
                     </ul>
                 </div>
 
-                <!-- SELECTOR DIDÁCTICO DE TAMAÑOS -->
-                <div class="space-y-4">
-                    <h3 class="text-lg font-bold text-arpaka-primary flex items-center gap-2">
-                        <i data-lucide="ruler" class="w-5 h-5"></i> Elige tu formato:
-                    </h3>
-                    <div class="grid grid-cols-2 gap-4">
-                        <!-- Opción A5 -->
-                        <div id="option-a5" class="size-option selected p-4 rounded-xl cursor-pointer bg-white shadow-sm border-2 border-gray-100 flex flex-col items-center text-center space-y-2 group" onclick="selectSize('A5', 25)">
-                            <div class="size-icon-container relative w-12 h-16 border-2 border-gray-300 rounded flex items-center justify-center bg-gray-50 group-hover:border-arpaka-accent transition-colors">
-                                <span class="text-xs font-bold text-gray-400">A5</span>
-                            </div>
-                            <div>
-                                <p class="font-bold text-arpaka-primary">Tamaño A5</p>
-                                <p class="text-xs text-gray-500">14.8 x 21 cm</p>
-                                <p class="text-sm font-semibold text-arpaka-accent mt-1">S/. 25.00</p>
-                            </div>
-                        </div>
-
-                        <!-- Opción A6 -->
-                        <div id="option-a6" class="size-option p-4 rounded-xl cursor-pointer bg-white shadow-sm border-2 border-gray-100 flex flex-col items-center text-center space-y-2 group" onclick="selectSize('A6', 15)">
-                            <div class="size-icon-container relative w-8 h-12 border-2 border-gray-300 rounded flex items-center justify-center bg-gray-50 group-hover:border-arpaka-accent transition-colors">
-                                <span class="text-xs font-bold text-gray-400">A6</span>
-                            </div>
-                            <div>
-                                <p class="font-bold text-arpaka-primary">Tamaño A6</p>
-                                <p class="text-xs text-gray-500">10.5 x 14.8 cm</p>
-                                <p class="text-sm font-semibold text-arpaka-accent mt-1">S/. 15.00</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Precio Dinámico y Acción -->
-                <div class="flex items-center justify-between bg-arpaka-neutral p-6 rounded-2xl shadow-inner">
-                    <div class="flex flex-col">
-                        <span class="text-sm text-gray-500 font-medium">Precio final</span>
-                        <span id="display-price" class="text-2xl font-extrabold text-arpaka-primary transition-all duration-300">S/. 25.00</span>
-                    </div>
-                    <a href="https://api.whatsapp.com/send?phone=985352699&text=¡¡¡ Lo quiero, quiero una bitácora de Chicha Morada !!!"
-                        class="bg-arpaka-primary text-arpaka-white cta-button font-bold py-2 px-7 rounded-full text-1xl hover:bg-arpaka-accent add-to-cart-btn"> Lo quiero</a>
-                </div>
-
-
                 <!-- Especificaciones Técnicas de movil-->
-                <div class="movil pt-6 border-t border-dashed border-gray-300">
+                <div class="movil">
                     <h3 class="text-2xl font-bold mb-4 text-arpaka-primary">Ficha Técnica</h3>
                     <ul class="text-lg space-y-3 text-gray-700">
                         <li class="flex items-center space-x-3">
@@ -331,14 +313,99 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A38E75" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20"/><path d="M2 12h20"/></svg>
                             <span class="font-semibold">Origen:</span>
                         </li>
-                        <h1 style="font-size: 15px; text-align: center ;">Hecho en Perú</h1>
+                        <h1 style="font-size: 15px; margin-left: 33px;">Hecho en Perú</h1>
                     </ul>
                 </div>
+
+                <!-- Selector de Tamaño Mejorado -->
+                <div class="mb-10">
+                    <div class="flex justify-between items-end mb-4">
+                        <h3 class="font-bold text-sm uppercase tracking-wider">Selecciona el formato</h3>
+                        <span class="text-xs text-arpaka-accent flex items-center gap-1"><i data-lucide="info" class="w-3"></i> Guía de medidas</span>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- Opción A5 -->
+                        <div id="size-a5" onclick="updatePrice('A5', 25)" class="size-card active p-5 rounded-2xl border-2 border-gray-100 cursor-pointer flex flex-col gap-3">
+                            <div class="flex justify-between items-start">
+                                <div class="w-10 h-14 border-2 border-arpaka-primary rounded bg-gray-50 flex items-center justify-center">
+                                    <span class="text-[10px] font-bold">A5</span>
+                                </div>
+                                <span class="bg-green-100 text-green-700 text-[10px] px-2 py-0.5 rounded-full font-bold">Más popular</span>
+                            </div>
+                            <div>
+                                <p class="font-bold">Tamaño Estándar (A5)</p>
+                                <p class="text-xs text-gray-400 italic">14.8 x 21 cm</p>
+                            </div>
+                        </div>
+
+                        <!-- Opción A6 -->
+                        <div id="size-a6" onclick="updatePrice('A6', 15)" class="size-card p-5 rounded-2xl border-2 border-gray-100 cursor-pointer flex flex-col gap-3">
+                            <div class="flex justify-between items-start">
+                                <div class="w-7 h-10 border-2 border-gray-300 rounded bg-gray-50 flex items-center justify-center">
+                                    <span class="text-[8px] font-bold text-gray-400">A6</span>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="font-bold">Tamaño Pocket (A6)</p>
+                                <p class="text-xs text-gray-400 italic">10.5 x 14.8 cm</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bloque de Precio y Checkout -->
+                <div class="bg-white p-8 rounded-3xl shadow-xl border border-gray-50">
+                    <div class="flex justify-between items-center mb-6">
+                        <div>
+                            <p class="text-xs uppercase text-gray-400 font-bold tracking-widest">Inversión</p>
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-2xl font-bold text-arpaka-accent">S/</span>
+                                <span id="main-price" class="text-5xl font-black text-arpaka-primary">25.00</span>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-xs text-orange-600 font-bold flex items-center gap-1 justify-end">
+                                <i data-lucide="zap" class="w-3 fill-current"></i> ¡Sólo quedan 4!
+                            </p>
+                        </div>
+                    </div>
+<a href="https://api.whatsapp.com/send?phone=985352699&text=¡¡¡ Lo quiero, quiero una bitácora de Chicha Morada !!!"
+                        class="w-full bg-arpaka-primary text-white py-5 rounded-2xl font-bold text-lg hover:bg-arpaka-accent transition-all flex items-center justify-center gap-3 shadow-lg active:scale-95"> Lo quiero</a>
                 
-                <!-- Información de Garantía/Envío -->
+                    <p class="text-center text-xs text-gray-400 mt-4 flex items-center justify-center gap-2">
+                        <i data-lucide="truck" class="w-3"></i> Envío a todo el Perú
+                    </p>
+                </div>
+
+                <!-- Beneficios Craft -->
+                <div class="grid grid-cols-3 gap-4 mt-8">
+                    <div class="text-center group">
+                        <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-2 group-hover:bg-arpaka-accent/10 transition-colors">
+                            <i data-lucide="package" class="w-5 text-arpaka-accent"></i>
+                        </div>
+                        <p class="text-[10px] font-bold uppercase">Eco Packaging</p>
+                    </div>
+                    <div class="text-center group">
+                        <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-2 group-hover:bg-arpaka-accent/10 transition-colors">
+                            <i data-lucide="shield-check" class="w-5 text-arpaka-accent"></i>
+                        </div>
+                        <p class="text-[10px] font-bold uppercase">Garantía Arpaka</p>
+                    </div>
+                    <div class="text-center group">
+                        <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-2 group-hover:bg-arpaka-accent/10 transition-colors">
+                            <i data-lucide="gift" class="w-5 text-arpaka-accent"></i>
+                        </div>
+                        <p class="text-[10px] font-bold uppercase">Incluye Stickers</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                <!-- Información de Garantía/Envío
                 <div class="pt-6 border-t border-gray-200 text-sm text-gray-500 italic">
                     <p>Envíos a todo el Perú.</p>
-                </div>
+                </div>-->
             </div>
         </div>
     </section>
@@ -380,6 +447,26 @@
 
     <!-- SCRIPT DE JAVASCRIPT -->
     <script>
+          lucide.createIcons();
+
+        function updatePrice(size, price) {
+            // Animación de cambio
+            const priceEl = document.getElementById('main-price');
+            priceEl.classList.remove('price-pop');
+            void priceEl.offsetWidth; // Trigger reflow
+            priceEl.classList.add('price-pop');
+            priceEl.innerText = price.toFixed(2);
+
+            // Update Cards
+            document.querySelectorAll('.size-card').forEach(c => c.classList.remove('active'));
+            document.getElementById(`size-${size.toLowerCase()}`).classList.add('active');
+        }
+
+        function changeImg(btn, src) {
+            document.getElementById('main-img').src = src;
+            document.querySelectorAll('.gap-4 button').forEach(b => b.classList.remove('border-arpaka-accent'));
+            btn.classList.add('border-arpaka-accent');
+        }
         document.addEventListener('DOMContentLoaded', () => {
             
             // --- 1. LÓGICA DE GALERÍA DE IMÁGENES ---
@@ -472,21 +559,6 @@
             `;
             
         });
-        // LÓGICA DEL SELECTOR DE TAMAÑO
-        function selectSize(size, price) {
-            // Actualizar clases visuales
-            document.querySelectorAll('.size-option').forEach(opt => opt.classList.remove('selected'));
-            document.getElementById(`option-${size.toLowerCase()}`).classList.add('selected');
-            
-            // Actualizar Precio con animación sutil
-            const priceDisplay = document.getElementById('display-price');
-            priceDisplay.style.opacity = '0';
-            
-            setTimeout(() => {
-                priceDisplay.textContent = `S/. ${price.toFixed(2)}`;
-                priceDisplay.style.opacity = '1';
-            }, 150);
-        }
     </script>
 </body>
 </html>
