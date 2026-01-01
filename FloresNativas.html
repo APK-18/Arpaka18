@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ARPAKA 18 | Bitacoras</title>
     <link rel="icon" href="img/CABEZA BLANCO ICO.ico">
+    <!--FUENTE DE NUNITO-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+
     <!-- Carga de fuentes profesionales --><link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
     <!-- Carga de Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
     <!-- Incluimos Lucide Icons --><script src="https://unpkg.com/lucide@latest"></script>
@@ -65,6 +70,56 @@
             animation: float 2s ease-in-out infinite;
         }
         
+        /* TIPOS DE DISPOSITIVO */
+        @media (max-width:767px){
+            .desktop{
+                display: none;
+            }
+            .tablet {
+                display: none;
+            }
+        }
+        @media (min-width:768px) and (max-width:990px) {
+            .desktop{
+                display: none;
+            }
+            .movil{
+                display: none;
+            }
+        }
+        @media (min-width:991px) {
+            .movil{
+                display: none;
+            }
+            .tablet {
+                display: none;
+            }
+        }
+        .size-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .size-card.active {
+            border-color: #A38E75;
+            background-color: #fff;
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px -5px rgba(163, 142, 117, 0.3);
+        }
+        .price-pop {
+            animation: pop 0.3s ease-out;
+        }
+        @keyframes pop {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .shimmer {
+            background: linear-gradient(90deg, #f0f0f0 25%, #f8f8f8 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
     </style>
 </head>
 <body class="bg-arpaka-neutral text-arpaka-black font-sans">
@@ -73,8 +128,7 @@
         <div class="p-6 h-full flex flex-col">
             <!-- Encabezado y botón de cierre --><div class="flex justify-between items-center mb-10 border-b pb-4">
                 <img src="img/LOGO NEGRO TRANSPARENTE.png" alt="" style="width: 45px;">
-                <!--<h3 class="text-2xl font-bold text-arpaka-accent" style="font-family: 'Nunito', sans-serif;">Arpaka18</h3>-->
-                <!-- Botón de cierre usando un SVG de Lucide --><button id="close-sidebar" class="text-arpaka-primary hover:text-arpaka-accent transition p-1 rounded-full">
+                <button id="close-sidebar" class="text-arpaka-primary hover:text-arpaka-accent transition p-1 rounded-full">
                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
                 </button>
             </div>
@@ -83,9 +137,7 @@
                 <a href="index.html" class="text-arpaka-black hover:text-arpaka-accent transition border-b pb-2">Home</a>
                 <a href="#" class="text-arpaka-black hover:text-arpaka-accent transition border-b pb-2">Nosotros</a>
                 <a href="Galería.html" class="text-arpaka-black hover:text-arpaka-accent transition border-b pb-2">Galería</a>
-                <!-- CTA del menú lateral --><!-- <a href="Galería.html" class="bg-arpaka-accent text-arpaka-white cta-button font-bold py-3 px-4 rounded-lg text-base text-center hover:bg-arpaka-primary mt-4">
-                    Productos
-                </a>-->
+                
             </nav>
             
             <!-- Información de contacto y redes sociales (Parte inferior) --><div class="pt-6 border-t">
@@ -115,7 +167,7 @@
                 <a href="#contacto" class="text-arpaka-black hover:text-arpaka-accent transition">Contacto</a>
             </div>
             
-            <!-- Controles a la derecha-->
+            <!-- Controles a la derecha -->
             <div class="flex items-center space-x-4">
                 <a href="Galería.html" class="hidden lg:block bg-arpaka-primary text-arpaka-white cta-button font-bold py-2 px-4 rounded-full text-base hover:bg-arpaka-accent text-center inline-block"> Galería de productos </a>
                 
@@ -147,37 +199,38 @@
                     <!-- Miniatura 1 (Fondo) -->
                     <div class="thumbnail active w-20 h-20 bg-gray-200 rounded-lg cursor-pointer hover:ring-2 ring-arpaka-accent transition duration-150"
                          data-image-src="img/bitacoras/Flores Nativas/flores2.jpeg"
-                         data-image-alt="Bitácora Chiclito">
+                         data-image-alt="Flores2">
                         <img src="img/bitacoras/Flores Nativas/flores2.jpeg" class="w-full h-full object-cover rounded-lg" />
                     </div>
                     
                     <!-- Miniatura 2 (Vista Interior) -->
                     <div class="thumbnail w-20 h-20 bg-gray-200 rounded-lg cursor-pointer hover:ring-2 ring-arpaka-accent transition duration-150"
                          data-image-src="img/bitacoras/Flores Nativas/flores5.jpeg"
-                         data-image-alt="Bitácora Inti Raymi (Tan) - Vista Interior">
+                         data-image-alt="Flores5">
                         <img src="img/bitacoras/Flores Nativas/flores5.jpeg" class="w-full h-full object-cover rounded-lg" />
                     </div>
-                    
-                    <!-- Miniatura 3 (Detalle de la costura) -->
+
+                    <!-- Miniatura 3 () -->
                     <div class="thumbnail w-20 h-20 bg-gray-200 rounded-lg cursor-pointer hover:ring-2 ring-arpaka-accent transition duration-150"
                          data-image-src="img/bitacoras/Flores Nativas/FloresCostura.jpeg"
-                         data-image-alt="Bitácora Inti Raymi (Tan) - Detalle de la costura">
+                         data-image-alt="Flores FloresCostura">
                         <img src="img/bitacoras/Flores Nativas/FloresCostura.jpeg" class="w-full h-full object-cover rounded-lg" />
                     </div>
 
                     <!-- Miniatura 4 (Empaque) -->
                     <div class="thumbnail w-20 h-20 bg-gray-200 rounded-lg cursor-pointer hover:ring-2 ring-arpaka-accent transition duration-150"
                          data-image-src="img/bitacoras/Flores Nativas/flores4.jpeg"
-                         data-image-alt="Bitácora Inti Raymi (Tan) - Empaque">
+                         data-image-alt="flores4">
                         <img src="img/bitacoras/Flores Nativas/flores4.jpeg" class="w-full h-full object-cover rounded-lg" />
                     </div>
 
-                    <!-- Miniatura 5 (Empaque) -->
+                    <!-- Miniatura 5 () -->
                     <div class="thumbnail w-20 h-20 bg-gray-200 rounded-lg cursor-pointer hover:ring-2 ring-arpaka-accent transition duration-150"
                          data-image-src="img/bitacoras/Flores Nativas/flores1.jpeg"
-                         data-image-alt="Bitácora Inti Raymi (Tan) - Empaque">
+                         data-image-alt="flores1">
                         <img src="img/bitacoras/Flores Nativas/flores1.jpeg" class="w-full h-full object-cover rounded-lg" />
                     </div>
+
                 </div>
             </div>
 
@@ -186,53 +239,146 @@
                 
                 <!-- Encabezado del Producto -->
                 <div class="border-b pb-4">
-                    <p class="text-xl text-arpaka-accent font-semibold">Cuadernillo vertical / 80gr.</p>
-                    <h2 class="text-5xl font-extrabold text-arpaka-primary mt-2" style="font-family: 'serif-title', serif;">Bitácora Flores Nativas del Perú</h2>
+                    <p class="text-xl text-arpaka-accent font-semibold">Cuadernillo vertical / 80gr</p>
+                    <h2 class="text-5xl font-extrabold text-arpaka-primary mt-2" style="font-family:  'Nunito', sans-serif; font-size: 45px;">Flores Nativas del Perú</h2>
                 </div>
-
-                <!-- Precio y CTA -->
-                <div class="flex items-center justify-between">
-                    <span class="text-5xl font-extrabold text-arpaka-primary">Desde S/ 14.99</span>
-                    <div class="flex space-x-3">
-                        <a href="https://api.whatsapp.com/send?phone=985352699&text=¡¡¡ Lo quiero, quiero una bitácora de Flores Nativas del Perú !!!" class="bg-arpaka-primary text-arpaka-white cta-button font-bold py-3 px-8 rounded-full text-xl hover:bg-arpaka-accent add-to-cart-btn"> Lo quiero</a>
-                    </div>
-                </div>
-
-                <!-- Descripción Larga -->
-                <div class="pt-4 border-t">
-                    <h3 class="text-2xl font-bold mb-3 text-arpaka-primary">Especificaciones, inspiración, recomendaciones o historia, etc.</h3>
-                    <p class="text-gray-700 leading-relaxed">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Et deserunt hic culpa commodi laboriosam magnam laborum autem sunt quasi ducimus dignissimos ipsam omnis voluptatem vitae ex nesciunt, iusto amet in.
-                    </p>
-                </div>
-
-                <!-- Especificaciones Técnicas -->
-                <div class="pt-6 border-t border-dashed border-gray-300">
+               
+                <!-- Especificaciones Técnicas de desktop-->
+                <div class="desktop">
                     <h3 class="text-2xl font-bold mb-4 text-arpaka-primary">Ficha Técnica</h3>
                     <ul class="text-lg space-y-3 text-gray-700">
                         <li class="flex items-center space-x-3">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A38E75" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-maximize"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
-                            <span class="font-semibold">Formato:</span> A5 (148 x 210 mm) y A6 (105 x 148 mm)
+                            <span class="font-semibold">Formato:</span><span> A5 (14,8 x21 cm) y A6 (10,5x14,8 cm)</span>
                         </li>
                         <li class="flex items-center space-x-3">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A38E75" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open-check"><path d="M8 2h8a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><path d="M10 12l2 2l4-4"/></svg>
-                            <span class="font-semibold">Páginas:</span> 50 hojas de papel avena (80gr)
+                            <span class="font-semibold">Páginas:</span> <span>50 hojas de papel avena (80gr)</span>
                         </li>
                         <li class="flex items-center space-x-3">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A38E75" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-hand-metal"><path d="M18 12.5V10l-4.5-4.5"/><path d="m14 10-1.5 5.5"/><path d="m13 10-2-6.5"/><path d="M10 20.5a5 5 0 0 1-10 0v-5a5 5 0 0 1 10 0"/><path d="M18 20.5a5 5 0 0 1-10 0v-5a5 5 0 0 1 10 0"/></svg>
-                            <span class="font-semibold">Encuadernación:</span> Cosida a mano
+                            <span class="font-semibold">Encuadernación:</span><span>Cosida a mano</span> 
                         </li>
                         <li class="flex items-center space-x-3">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A38E75" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20"/><path d="M2 12h20"/></svg>
-                            <span class="font-semibold">Origen:</span> Hecho en Perú
+                            <span class="font-semibold">Origen:</span><span >Hecho en Perú</span>
                         </li>
                     </ul>
                 </div>
-                
-                <!-- Información de Garantía/Envío -->
-                <div class="pt-6 border-t border-gray-200 text-sm text-gray-500 italic">
-                    <p>Envío disponible en lima. Garantía de ARPAKA 18.</p>
+
+                <!-- Especificaciones Técnicas de movil-->
+                <div class="movil">
+                    <h3 class="text-2xl font-bold mb-4 text-arpaka-primary">Ficha Técnica</h3>
+                    <ul class="text-lg space-y-3 text-gray-700">
+                        <li class="flex items-center space-x-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A38E75" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-maximize"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+                            <span class="font-semibold">Formato:</span>
+                        </li>
+                        <h1 style="font-size: 15px; margin-left: 33px;">A5 (14,8 x 21 cm)</h1>
+                        <h1 style="font-size: 15px; margin-left: 33px;">A6 (10,5 x 14,8 cm)</h1>
+                        <li class="flex items-center space-x-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A38E75" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open-check"><path d="M8 2h8a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><path d="M10 12l2 2l4-4"/></svg>
+                            <span class="font-semibold">Páginas:</span> 
+                        </li>
+                        <h1 style="font-size: 15px; margin-left: 33px;">50 hojas de papel avena (80gr)</h1>
+                        <li class="flex items-center space-x-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A38E75" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-hand-metal"><path d="M18 12.5V10l-4.5-4.5"/><path d="m14 10-1.5 5.5"/><path d="m13 10-2-6.5"/><path d="M10 20.5a5 5 0 0 1-10 0v-5a5 5 0 0 1 10 0"/><path d="M18 20.5a5 5 0 0 1-10 0v-5a5 5 0 0 1 10 0"/></svg>
+                            <span class="font-semibold">Encuadernación:</span> 
+                        </li>
+                        <h1 style="font-size: 15px; margin-left: 33px;">Cosido a mano</h1>
+                        <li class="flex items-center space-x-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A38E75" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20"/><path d="M2 12h20"/></svg>
+                            <span class="font-semibold">Origen:</span>
+                        </li>
+                        <h1 style="font-size: 15px; margin-left: 33px;">Hecho en Perú</h1>
+                    </ul>
                 </div>
+
+                <!-- Selector de Tamaño Mejorado -->
+                <div class="mb-10">
+                    <div class="flex justify-between items-end mb-4">
+                        <h3 class="font-bold text-sm uppercase tracking-wider">Selecciona el formato</h3>
+                        <span class="text-xs text-arpaka-accent flex items-center gap-1"><i data-lucide="info" class="w-3"></i> Guía de medidas</span>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- Opción A5 -->
+                        <div id="size-a5" onclick="updatePrice('A5', 25)" class="size-card active p-5 rounded-2xl border-2 border-gray-100 cursor-pointer flex flex-col gap-3">
+                            <div class="flex justify-between items-start">
+                                <div class="w-10 h-14 border-2 border-arpaka-primary rounded bg-gray-50 flex items-center justify-center">
+                                    <span class="text-[10px] font-bold">A5</span>
+                                </div>
+                                <span class="bg-green-100 text-green-700 text-[10px] px-2 py-0.5 rounded-full font-bold">Más popular</span>
+                            </div>
+                            <div>
+                                <p class="font-bold">Tamaño Estándar (A5)</p>
+                                <p class="text-xs text-gray-400 italic">14.8 x 21 cm</p>
+                            </div>
+                        </div>
+
+                        <!-- Opción A6 -->
+                        <div id="size-a6" onclick="updatePrice('A6', 15)" class="size-card p-5 rounded-2xl border-2 border-gray-100 cursor-pointer flex flex-col gap-3">
+                            <div class="flex justify-between items-start">
+                                <div class="w-7 h-10 border-2 border-gray-300 rounded bg-gray-50 flex items-center justify-center">
+                                    <span class="text-[8px] font-bold text-gray-400">A6</span>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="font-bold">Tamaño Pocket (A6)</p>
+                                <p class="text-xs text-gray-400 italic">10.5 x 14.8 cm</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bloque de Precio y Checkout -->
+                <div class="bg-white p-8 rounded-3xl shadow-xl border border-gray-50">
+                    <div class="flex justify-between items-center mb-6">
+                        <div>
+                            <p class="text-xs uppercase text-gray-400 font-bold tracking-widest">Inversión</p>
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-2xl font-bold text-arpaka-accent">S/</span>
+                                <span id="main-price" class="text-5xl font-black text-arpaka-primary">25.00</span>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-xs text-orange-600 font-bold flex items-center gap-1 justify-end">
+                                <i data-lucide="zap" class="w-3 fill-current"></i> ¡Stock limitado!
+                            </p>
+                        </div>
+                    </div>
+<a href="https://api.whatsapp.com/send?phone=960315368&text=¡Me encanta! Quiero una bitácora de Flores Nativas del Perú, por favor"
+                        class="w-full bg-arpaka-primary text-white py-5 rounded-2xl font-bold text-lg hover:bg-arpaka-accent transition-all flex items-center justify-center gap-3 shadow-lg active:scale-95"> Lo quiero</a>
+                
+                    <p class="text-center text-xs text-gray-400 mt-4 flex items-center justify-center gap-2">
+                        <i data-lucide="truck" class="w-3"></i> Envío a todo el Perú
+                    </p>
+                </div>
+
+                <!-- Beneficios Craft -->
+                <div class="grid grid-cols-3 gap-4 mt-8">
+                    <div class="text-center group">
+                        <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-2 group-hover:bg-arpaka-accent/10 transition-colors">
+                            <i data-lucide="package" class="w-5 text-arpaka-accent"></i>
+                        </div>
+                        <p class="text-[10px] font-bold uppercase">Eco Packaging</p>
+                    </div>
+                    <div class="text-center group">
+                        <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-2 group-hover:bg-arpaka-accent/10 transition-colors">
+                            <i data-lucide="shield-check" class="w-5 text-arpaka-accent"></i>
+                        </div>
+                        <p class="text-[10px] font-bold uppercase">Garantía Arpaka</p>
+                    </div>
+                    <div class="text-center group">
+                        <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-2 group-hover:bg-arpaka-accent/10 transition-colors">
+                            <i data-lucide="gift" class="w-5 text-arpaka-accent"></i>
+                        </div>
+                        <p class="text-[10px] font-bold uppercase">Incluye Stickers</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
             </div>
         </div>
     </section>
@@ -246,12 +392,12 @@
                     <img src="img/CABEZA CON NOMBRE BANCO.png" alt="ARPAKA 18 Logo de Llama" class="logo-img filter-none" style="height: 30px;">
                     <p class="font-bold text-xl text-arpaka-accent" style="font-family: 'serif-title', serif;"></p>
                 </a>
-                <p class="text-sm text-gray-400 mt-2">Calidad certificada, tradición viva.</p>
+                <p class="text-sm text-gray-400 mt-2">Calidad asegurada, tradición viva.</p>
             </div>
             <div class="text-sm">
                 <p class="text-lg font-semibold mb-2">Conversemos</p>
                 <a href="https://api.whatsapp.com/send?phone=985352699">WhatsApp: +51 985 352 699</a>
-                
+                <a href="https://api.whatsapp.com/send?phone=960315368">+51 960 315 368</a>
                 <!-- Redes Sociales -->
                 <div class="mt-4 space-x-4 flex justify-center md:justify-start">
                     <a href="#" class="text-arpaka-accent hover:text-gray-400 transition duration-300"></a>
@@ -275,6 +421,26 @@
 
     <!-- SCRIPT DE JAVASCRIPT -->
     <script>
+          lucide.createIcons();
+
+        function updatePrice(size, price) {
+            // Animación de cambio
+            const priceEl = document.getElementById('main-price');
+            priceEl.classList.remove('price-pop');
+            void priceEl.offsetWidth; // Trigger reflow
+            priceEl.classList.add('price-pop');
+            priceEl.innerText = price.toFixed(2);
+
+            // Update Cards
+            document.querySelectorAll('.size-card').forEach(c => c.classList.remove('active'));
+            document.getElementById(`size-${size.toLowerCase()}`).classList.add('active');
+        }
+
+        function changeImg(btn, src) {
+            document.getElementById('main-img').src = src;
+            document.querySelectorAll('.gap-4 button').forEach(b => b.classList.remove('border-arpaka-accent'));
+            btn.classList.add('border-arpaka-accent');
+        }
         document.addEventListener('DOMContentLoaded', () => {
             
             // --- 1. LÓGICA DE GALERÍA DE IMÁGENES ---
@@ -357,7 +523,7 @@
             const floatingCtaContainer = document.getElementById('floating-cta');
 
             floatingCtaContainer.innerHTML = `
-                <a href="https://api.whatsapp.com/send?phone=985352699&text=Hola,quiero una bitácora" class="block">
+                <a href="https://api.whatsapp.com/send?phone=985352699&text=Hola, quisiera una bitácora con todo, por favor" class="block">
                     <div class="bg-arpaka-accent text-arpaka-white p-2 rounded-full shadow-2xl 
                                 w-16 h-16 flex items-center justify-center float-animation 
                                 transition duration-300 hover:scale-110 hover:shadow-arpaka-accent/50">
