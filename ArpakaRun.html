@@ -224,11 +224,19 @@
 
     #game-container {
         width: 300vw;          /* ocupa TODO el ancho */
-        height: 180vw;         /* más alto, menos ventana */
+        height: 200vw;         /* más alto, menos ventana */
         transform: scale(0.60);
         transform-origin: left bottom;
     }
 
+}
+#hud {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    pointer-events: none;
+    z-index: 10000;
 }
 
     </style>
@@ -237,7 +245,9 @@
 
 <div id="camera-wrapper">
 <div id="game-container">
-    <div class="absolute top-4 left-4 right-4 flex justify-between items-start z-[100]">
+    <div id="hud">
+    <div class="absolute top-4 left-4 right-4 flex justify-between items-start">
+
         <div class="flex flex-col gap-1.5">
             <div class="stat-card px-3 py-1.5 rounded-xl flex items-center gap-2">
                 <span class="text-xl">🌵</span>
@@ -258,6 +268,7 @@
                 Inicio
             </button>-->
         </div>
+    </div>
     </div>
 
     <div id="clouds-layer"></div>
@@ -597,12 +608,19 @@ gameOverScreen.classList.add('game-over-animate');
             }
         }
     });
-
-    container.addEventListener('touchstart', (e) => {
-        if(state.active) {
-            if(state.jumps < 2) { state.velY = config.jumpPower; state.jumps++; }
+    document.addEventListener('touchstart', (e) => {
+    if(state.active) {
+        if(state.jumps < 2) {
+            state.velY = config.jumpPower;
+            state.jumps++;
         }
-    });
+    } else if(!gameOverScreen.classList.contains('hidden')) {
+        start();
+    }
+});
+
+
+    
 
     document.getElementById('retry-btn').onclick = start;
     highscoreUI.innerText = state.highscore;
