@@ -12,6 +12,7 @@
             --sky-blue: #a3e4f7;
             --andes-gold: #ffc107;
             --grass-dark: #2e7d32;
+            --primary-orange: #ff8a65;
         }
 
         body {
@@ -21,8 +22,6 @@
             font-family: 'Quicksand', sans-serif;
             overflow: hidden;
             touch-action: none;
-            width: 100%;
-            height: 100%;
         }
 
         #game-container {
@@ -33,52 +32,95 @@
             overflow: hidden;
         }
 
-        /* Nubes */
-        .cloud {
-            position: absolute;
-            background: white;
-            border-radius: 50px;
-            opacity: 0.6;
-            z-index: 2;
-            pointer-events: none;
+        /* Overlay de Orientación */
+        #orientation-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #2196f3;
+            z-index: 10000;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
         }
-        .cloud::before, .cloud::after {
+
+        .phone-icon {
+            width: 50px;
+            height: 90px;
+            border: 3px solid white;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            position: relative;
+            animation: rotateDevice 2s infinite ease-in-out;
+        }
+
+        .phone-icon::after {
             content: '';
             position: absolute;
-            background: white;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 8px;
+            border: 1px solid white;
             border-radius: 50%;
         }
-        .cloud::before { width: 50%; height: 80%; top: -40%; left: 15%; }
-        .cloud::after { width: 40%; height: 60%; top: -25%; right: 15%; }
 
-        /* Suelo adaptativo */
+        @keyframes rotateDevice {
+            0% { transform: rotate(0deg); }
+            50% { transform: rotate(-90deg); }
+            100% { transform: rotate(-90deg); }
+        }
+
+        /* Mostrar solo en móviles en vertical */
+        @media (max-width: 900px) and (orientation: portrait) {
+            #orientation-overlay {
+                display: flex;
+            }
+        }
+
+        /* --- Estilos Originales --- */
+        .mountain {
+            position: absolute;
+            bottom: 80px;
+            background: #78909c;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+
+        .snow-cap {
+            position: absolute;
+            top: 0;
+            left: 30%;
+            width: 40%;
+            height: 20%;
+            background: white;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+
         .floor {
             position: absolute;
             bottom: 0;
             width: 100%;
-            height: 12vh; /* Altura relativa para móviles */
-            min-height: 60px;
+            height: 80px;
             background: #5c493b;
-            border-top: 6px solid #6b905c;
+            border-top: 8px solid #6b905c;
             z-index: 10;
         }
 
         #alpaca-wrapper {
             position: absolute;
-            bottom: 12vh;
-            left: 10vw; /* Más a la izquierda en móviles */
-            width: 60px;
-            height: 75px;
+            bottom: 80px;
+            left: 60px;
+            width: 70px;
+            height: 85px;
             z-index: 50;
-            transition: width 0.3s, height 0.3s;
-        }
-
-        @media (min-width: 768px) {
-            #alpaca-wrapper {
-                width: 75px;
-                height: 90px;
-                left: 60px;
-            }
+            transition: transform 0.1s;
         }
 
         #alpaca-sprite {
@@ -87,62 +129,62 @@
             object-fit: contain;
         }
 
-        #shield-aura {
-            position: absolute;
-            width: 150%;
-            height: 150%;
-            border: 4px solid #00e5ff;
-            border-radius: 50%;
-            top: -25%;
-            left: -25%;
-            background: rgba(0, 229, 255, 0.15);
-            box-shadow: 0 0 20px #00e5ff;
-            display: none;
-            animation: pulse 0.8s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.05); opacity: 0.4; }
-            100% { transform: scale(1); opacity: 0.8; }
-        }
-
         .game-font { font-family: 'Fredoka One', cursive; }
+
         .stat-card {
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(5px);
             border: 2px solid #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             border-radius: 12px;
         }
 
-        .item { position: absolute; z-index: 20; display: flex; align-items: center; justify-content: center; }
-        .particle { position: absolute; pointer-events: none; border-radius: 50%; z-index: 60; }
-
-        /* Modal Responsivo */
-        .modal-container {
-            background: #fff;
-            border-radius: 24px;
-            box-shadow: 0 10px 0 rgba(0,0,0,0.1);
-            width: 90%;
-            max-width: 320px;
-            padding: 2rem 1.5rem;
+        .item { position: absolute; z-index: 20; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+        
+        #shield-aura {
+            position: absolute;
+            inset: -10px;
+            border: 3px solid #00e5ff;
+            border-radius: 50%;
+            animation: pulse 1s infinite;
+            display: none;
         }
 
-        .btn-play {
-            background: #EFA523;
-            color: white;
-            border-bottom: 5px solid #ca8a1b;
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.3); opacity: 0; }
         }
-        .btn-play:active {
-            border-bottom-width: 1px;
-            transform: translateY(4px);
+
+        .cloud {
+            position: absolute;
+            background: white;
+            border-radius: 50px;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        .turbo-effect {
+            animation: shake 0.1s infinite;
+        }
+
+        @keyframes shake {
+            0% { transform: translate(1px, 1px); }
+            50% { transform: translate(-1px, -1px); }
+            100% { transform: translate(1px, -1px); }
         }
     </style>
 </head>
 <body>
 
+<!-- Aviso de Rotación -->
+<div id="orientation-overlay">
+    <div class="phone-icon"></div>
+    <h1 class="game-font text-2xl mb-2">¡GIRA TU DISPOSITIVO!</h1>
+    <p class="text-sm px-10">Para una mejor jugabilidad, utiliza el modo horizontal.</p>
+</div>
+
 <div id="game-container">
-    <!-- UI Superior -->
+    <!-- UI Layer -->
     <div class="absolute top-4 left-4 right-4 flex justify-between items-start z-[100]">
         <div class="flex flex-col gap-2">
             <div class="stat-card px-3 py-1 flex items-center gap-2">
@@ -155,246 +197,201 @@
             </div>
         </div>
         
-        <div class="flex flex-col items-end gap-2">
-            <div class="stat-card px-3 py-1 text-center">
-                <div class="text-[8px] uppercase font-bold text-gray-400">Récord</div>
-                <div id="highscore" class="text-sm game-font text-orange-600">0</div>
-            </div>
+        <div class="stat-card px-3 py-1 text-center">
+            <div class="text-[8px] uppercase font-bold text-gray-400">Récord Mundial</div>
+            <div id="highscore" class="text-sm game-font text-orange-600">0</div>
         </div>
     </div>
 
+    <!-- Background Layers -->
     <div id="clouds-layer"></div>
+    <div id="mountains-layer"></div>
+
+    <!-- Alpaca -->
     <div id="alpaca-wrapper">
         <div id="shield-aura"></div>
         <img id="alpaca-sprite" src="img/ArpakaVolteada.png" alt="Alpaca">
     </div>
+
+    <!-- Floor -->
     <div class="floor"></div>
 
-    <!-- Pantalla de Game Over -->
-    <div id="game-over" class="hidden absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[1000]">
-        <div class="modal-container text-center">
-            <h2 class="game-font text-3xl text-red-500 mb-4">¡OUCH!</h2>
+    <!-- Game Over Screen -->
+    <div id="game-over" class="hidden absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[2000]">
+        <div class="bg-white p-8 rounded-3xl text-center max-w-[300px] w-[90%] shadow-2xl">
+            <h2 class="game-font text-3xl text-red-500 mb-2">¡FIN DEL VIAJE!</h2>
+            <div id="record-banner" class="hidden bg-yellow-100 text-yellow-700 text-[10px] font-bold py-1 px-3 rounded-full mb-4 inline-block">NUEVO RÉCORD</div>
             
-            <div class="grid grid-cols-2 gap-3 mb-6">
-                <div class="bg-gray-50 p-3 rounded-xl border-2 border-gray-100">
-                    <p class="text-[10px] font-bold text-gray-400 uppercase">Puntos</p>
-                    <p id="final-score" class="text-xl game-font">0</p>
+            <div class="flex justify-around mb-6">
+                <div>
+                    <p class="text-[10px] uppercase font-bold text-gray-400">Puntaje</p>
+                    <p id="final-score" class="text-2xl game-font text-slate-700">0</p>
                 </div>
-                <div class="bg-gray-50 p-3 rounded-xl border-2 border-gray-100">
-                    <p class="text-[10px] font-bold text-gray-400 uppercase">Monedas</p>
-                    <p id="final-coins" class="text-xl game-font">0</p>
+                <div>
+                    <p class="text-[10px] uppercase font-bold text-gray-400">Monedas</p>
+                    <p id="final-coins" class="text-2xl game-font text-slate-700">0</p>
                 </div>
             </div>
-
-            <button id="retry-btn" class="btn-play w-full py-4 rounded-xl game-font text-lg mb-3">
-                INTENTAR DE NUEVO
+            
+            <button id="retry-btn" class="w-full py-4 rounded-2xl bg-orange-500 hover:bg-orange-600 text-white game-font text-xl transition-all active:scale-95 shadow-lg border-b-4 border-orange-700">
+                REINTENTAR
             </button>
-            <button onclick="location.reload()" class="text-gray-400 game-font text-sm uppercase">Reiniciar Todo</button>
         </div>
     </div>
 </div>
 
 <script>
-    const isMobile = window.innerWidth < 768;
-
     const config = {
-        gravity: isMobile ? 0.7 : 0.8,
-        jumpPower: isMobile ? -14 : -16,
-        baseSpeed: isMobile ? 5.5 : 7,
-        maxSpeed: 16,
-        spawnInterval: 2200,
-        cycleLength: 300,
-        // Escala de objetos para móviles
-        scale: isMobile ? 0.8 : 1.0
+        gravity: 0.8,
+        jumpPower: -15,
+        baseSpeed: 8,
+        maxSpeed: 18,
+        spawnInterval: 1800
     };
-
-    const skyStates = [
-        { score: 0,   top: [79, 195, 247], bottom: [163, 228, 247] },
-        { score: 0.2, top: [255, 152, 0],  bottom: [255, 204, 128] },
-        { score: 0.4, top: [63, 81, 181],  bottom: [156, 39, 176] },
-        { score: 0.7, top: [26, 35, 126],  bottom: [40, 53, 147] },
-        { score: 1.0, top: [13, 17, 23],   bottom: [22, 27, 34] }
-    ];
 
     let state = {
         active: false,
         score: 0,
         coins: 0,
-        highscore: parseInt(localStorage.getItem('alpaca_high_new')) || 0,
+        highscore: parseInt(localStorage.getItem('alpaca_extreme_high')) || 0,
         speed: config.baseSpeed,
         y: 0,
         velY: 0,
         jumps: 0,
         entities: [],
-        clouds: [],
         lastSpawn: 0,
         hasShield: false,
         isTurbo: false
     };
 
     const container = document.getElementById('game-container');
-    const cloudLayer = document.getElementById('clouds-layer');
     const alpaca = document.getElementById('alpaca-wrapper');
-    const shieldAura = document.getElementById('shield-aura');
     const scoreUI = document.getElementById('score');
     const coinsUI = document.getElementById('coins');
     const highscoreUI = document.getElementById('highscore');
     const gameOverScreen = document.getElementById('game-over');
-
-    function lerpColor(c1, c2, factor) {
-        const r = Math.round(c1[0] + factor * (c2[0] - c1[0]));
-        const g = Math.round(c1[1] + factor * (c2[1] - c1[1]));
-        const b = Math.round(c1[2] + factor * (c2[2] - c1[2]));
-        return `rgb(${r}, ${g}, ${b})`;
-    }
-
-    function updateAtmosphere() {
-        const progress = (state.score % config.cycleLength) / config.cycleLength;
-        let start, end, localFactor;
-
-        for (let i = 0; i < skyStates.length - 1; i++) {
-            if (progress >= skyStates[i].score && progress <= skyStates[i+1].score) {
-                start = skyStates[i];
-                end = skyStates[i+1];
-                const range = end.score - start.score;
-                localFactor = (progress - start.score) / range;
-                break;
-            }
-        }
-
-        if (start && end) {
-            const topColor = lerpColor(start.top, end.top, localFactor);
-            const bottomColor = lerpColor(start.bottom, end.bottom, localFactor);
-            container.style.background = `linear-gradient(to bottom, ${topColor} 0%, ${bottomColor} 100%)`;
-        }
-    }
-
-    function spawnCloud(startX = window.innerWidth + 100) {
-        const c = document.createElement('div');
-        c.className = 'cloud';
-        const w = (80 + Math.random() * 120) * config.scale;
-        c.style.width = w + 'px';
-        c.style.height = (w * 0.35) + 'px';
-        const y = 50 + Math.random() * (window.innerHeight * 0.5);
-        c.style.left = startX + 'px';
-        c.style.top = y + 'px';
-        cloudLayer.appendChild(c);
-        state.clouds.push({ el: c, x: startX, speed: 0.3 + Math.random() * 0.5 });
-    }
+    const shieldAura = document.getElementById('shield-aura');
 
     function spawn() {
         if(!state.active) return;
+        
         const r = Math.random();
         let entity = null;
-        const floorY = window.innerHeight * 0.12; // Altura del suelo real en px
 
         if(r < 0.15) {
-            entity = { type: 'coin', label: '🪙', w: 35, h: 35, y: floorY + 60 + Math.random() * 100, collect: true };
-        } else if(r < 0.22) {
-            const type = Math.random() > 0.5 ? 'shield' : 'turbo';
-            entity = { type: 'power', label: type === 'shield' ? '🛡️' : '🌶️', w: 40, h: 40, y: floorY + 40, collect: true, pType: type };
+            entity = { type: 'coin', label: '🪙', w: 35, h: 35, y: 80 + 50 + Math.random()*100, collect: true };
+        } else if(r < 0.20) {
+            entity = { type: 'shield', label: '🛡️', w: 35, h: 35, y: 80 + 80, collect: true };
+        } else if(r < 0.25) {
+            entity = { type: 'turbo', label: '⚡', w: 35, h: 35, y: 80 + 30, collect: true };
         } else {
-            const bird = Math.random() > 0.85 && state.score > 10;
-            entity = { type: 'obs', label: bird ? '🦅' : '🌵', w: 60 * config.scale, h: 60 * config.scale, y: bird ? floorY + 130 : floorY, collect: false, scored: false };
+            const size = 50 + Math.random() * 30;
+            entity = { type: 'obs', label: '🌵', w: size, h: size, y: 80, collect: false, scored: false };
         }
 
         const el = document.createElement('div');
         el.className = 'item';
-        el.style.fontSize = (entity.w * 0.8) + 'px';
-        el.style.width = entity.w + 'px';
-        el.style.height = entity.h + 'px';
+        el.style.fontSize = entity.w + 'px';
         el.innerHTML = entity.label;
-        el.style.left = window.innerWidth + 50 + 'px';
+        el.style.left = window.innerWidth + 'px';
         el.style.bottom = entity.y + 'px';
         container.appendChild(el);
-        state.entities.push({ ...entity, el, x: window.innerWidth + 50 });
+        
+        state.entities.push({ ...entity, el, x: window.innerWidth });
     }
 
     function gameLoop(time) {
         if(!state.active) return;
 
-        updateAtmosphere();
+        // Física Salto
+        state.velY += config.gravity;
+        state.y -= state.velY;
+        
+        if(state.y < 0) {
+            state.y = 0;
+            state.velY = 0;
+            state.jumps = 0;
+        }
+        
+        alpaca.style.bottom = (80 + state.y) + 'px';
 
-        // Nubes
-        state.clouds.forEach((c, i) => {
-            c.x -= c.speed;
-            c.el.style.left = c.x + 'px';
-            if(c.x < -200) { c.el.remove(); state.clouds.splice(i, 1); spawnCloud(); }
-        });
-
-        // Spawn
-        let dynamicInterval = config.spawnInterval - (state.speed * 120);
-        if(state.isTurbo) dynamicInterval = 600;
-        if(time - state.lastSpawn > dynamicInterval) {
+        // Spawn Lógica
+        if(time - state.lastSpawn > config.spawnInterval / (state.speed/8)) {
             spawn();
             state.lastSpawn = time;
         }
 
-        // Física Alpaca
-        state.velY += config.gravity;
-        state.y -= state.velY;
-        if(state.y < 0) { state.y = 0; state.velY = 0; state.jumps = 0; }
-        alpaca.style.bottom = (window.innerHeight * 0.12 + state.y) + 'px';
-        alpaca.style.transform = `rotate(${state.jumps > 0 ? state.velY * 1.5 : 0}deg)`;
-
-        // Colisiones
+        // Entidades
         const aRect = alpaca.getBoundingClientRect();
-        const hitBox = { 
-            l: aRect.left + 10, 
-            r: aRect.right - 10, 
-            t: aRect.top + 10, 
-            b: aRect.bottom - 5 
-        };
 
-        for(let i = state.entities.length-1; i>=0; i--) {
+        for(let i = state.entities.length - 1; i >= 0; i--) {
             const ent = state.entities[i];
             ent.x -= state.speed;
             ent.el.style.left = ent.x + 'px';
 
             const eRect = ent.el.getBoundingClientRect();
 
-            if(hitBox.l < eRect.right && hitBox.r > eRect.left && hitBox.t < eRect.bottom && hitBox.b > eRect.top) {
+            // Colisión Circular aproximada
+            const dist = Math.hypot(
+                (aRect.left + aRect.width/2) - (eRect.left + eRect.width/2),
+                (aRect.top + aRect.height/2) - (eRect.top + eRect.height/2)
+            );
+
+            if(dist < (aRect.width/2 + eRect.width/3)) {
                 if(ent.collect) {
-                    if(ent.type === 'coin') {
-                        state.coins++; coinsUI.innerText = state.coins;
-                    } else if(ent.pType === 'shield') {
-                        state.hasShield = true; shieldAura.style.display = 'block';
-                    } else if(ent.pType === 'turbo') {
-                        activateTurbo();
-                    }
-                    ent.el.remove(); state.entities.splice(i, 1);
-                } else {
-                    if(state.isTurbo || state.hasShield) {
-                        if(state.hasShield && !state.isTurbo) {
-                            state.hasShield = false;
-                            shieldAura.style.display = 'none';
-                        }
-                        ent.el.remove(); state.entities.splice(i, 1);
+                    handlePowerup(ent.type);
+                    ent.el.remove();
+                    state.entities.splice(i, 1);
+                } else if(!state.isTurbo) {
+                    if(state.hasShield) {
+                        state.hasShield = false;
+                        shieldAura.style.display = 'none';
+                        ent.el.remove();
+                        state.entities.splice(i, 1);
                     } else {
-                        gameOver(); return;
+                        gameOver();
+                        return;
                     }
                 }
             }
 
             if(!ent.collect && !ent.scored && ent.x < aRect.left) {
-                ent.scored = true; state.score++; scoreUI.innerText = state.score;
+                ent.scored = true;
+                state.score++;
+                scoreUI.innerText = state.score;
+                if(state.score % 10 === 0) state.speed = Math.min(config.maxSpeed, state.speed + 0.5);
             }
-            if(ent.x < -100) { ent.el.remove(); state.entities.splice(i, 1); }
+
+            if(ent.x < -100) {
+                ent.el.remove();
+                state.entities.splice(i, 1);
+            }
         }
 
-        if(!state.isTurbo) state.speed = Math.min(config.maxSpeed, state.speed + 0.003);
         requestAnimationFrame(gameLoop);
+    }
+
+    function handlePowerup(type) {
+        if(type === 'coin') {
+            state.coins++;
+            coinsUI.innerText = state.coins;
+        } else if(type === 'shield') {
+            state.hasShield = true;
+            shieldAura.style.display = 'block';
+        } else if(type === 'turbo') {
+            activateTurbo();
+        }
     }
 
     function activateTurbo() {
         state.isTurbo = true;
-        const prevSpeed = state.speed;
-        state.speed = 15;
-        alpaca.style.filter = 'hue-rotate(300deg) brightness(1.3)';
+        const oldSpeed = state.speed;
+        state.speed *= 2;
+        alpaca.classList.add('turbo-effect');
         setTimeout(() => {
             state.isTurbo = false;
-            state.speed = prevSpeed;
-            alpaca.style.filter = 'none';
+            state.speed = oldSpeed;
+            alpaca.classList.remove('turbo-effect');
         }, 3000);
     }
 
@@ -402,9 +399,14 @@
         state.active = false;
         document.getElementById('final-score').innerText = state.score;
         document.getElementById('final-coins').innerText = state.coins;
+        
+        const recordBanner = document.getElementById('record-banner');
         if(state.score > state.highscore) {
             state.highscore = state.score;
-            localStorage.setItem('alpaca_high_new', state.highscore);
+            localStorage.setItem('alpaca_extreme_high', state.highscore);
+            recordBanner.classList.remove('hidden');
+        } else {
+            recordBanner.classList.add('hidden');
         }
         highscoreUI.innerText = state.highscore;
         gameOverScreen.classList.remove('hidden');
@@ -422,29 +424,54 @@
         coinsUI.innerText = "0";
         shieldAura.style.display = 'none';
         gameOverScreen.classList.add('hidden');
-        
-        cloudLayer.innerHTML = '';
-        state.clouds = [];
-        for(let i=0; i<4; i++) spawnCloud(Math.random() * window.innerWidth);
-        
+        setupClouds();
         requestAnimationFrame(gameLoop);
     }
 
-    // Eventos
-    const handleJump = (e) => {
-        if(e.type === 'touchstart') e.preventDefault();
-        if(state.active && state.jumps < 2) {
-            state.velY = config.jumpPower;
-            state.jumps++;
+    function setupClouds() {
+        const layer = document.getElementById('clouds-layer');
+        layer.innerHTML = '';
+        for(let i=0; i<6; i++) {
+            const c = document.createElement('div');
+            c.className = 'cloud';
+            c.style.width = (100 + Math.random() * 100) + 'px';
+            c.style.height = '40px';
+            c.style.top = (Math.random() * 40) + '%';
+            c.style.left = (Math.random() * 100) + '%';
+            layer.appendChild(c);
+        }
+    }
+
+    // Controles
+    const triggerJump = () => {
+        if(state.active) {
+            if(state.jumps < 2) { 
+                state.velY = config.jumpPower; 
+                state.jumps++; 
+            }
+        } else if(!gameOverScreen.classList.contains('hidden')) {
+            start();
         }
     };
 
     window.addEventListener('keydown', (e) => {
-        if(['Space', 'ArrowUp', 'KeyW'].includes(e.code)) handleJump(e);
+        if(e.code === 'Space' || e.code === 'ArrowUp') triggerJump();
     });
-    container.addEventListener('touchstart', handleJump, { passive: false });
 
-    document.getElementById('retry-btn').onclick = start;
+    container.addEventListener('touchstart', (e) => {
+        // Evitar saltar si se está tocando el botón de reintentar
+        if(e.target.id !== 'retry-btn') {
+            e.preventDefault();
+            triggerJump();
+        }
+    }, { passive: false });
+
+    document.getElementById('retry-btn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        start();
+    });
+
+    // Init
     highscoreUI.innerText = state.highscore;
     start();
 </script>
