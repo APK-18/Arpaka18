@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ARPAKA18 | Run</title>
+    <link rel="icon" href="img/CABEZA BLANCO ICO.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sky-blue: #a3e4f7;
+            --andes-gold: #ffc107;
+            --grass-dark: #2e7d32;
+            --primary-orange: #ff8a65;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #4fc3f7;
+            font-family: 'Quicksand', sans-serif;
+            overflow: hidden;
+            touch-action: none;
+        }
+
+        #game-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            /* La transición se maneja por JS suavemente */
+            background: linear-gradient(to bottom, #4fc3f7 0%, #a3e4f7 100%);
+            overflow: hidden;
+        }
+
+        /* Nubes de fondo */
+        .cloud {
+            position: absolute;
+            background: white;
+            border-radius: 50px;
+            opacity: 0.6;
+            z-index: 2;
+            pointer-events: none;
+            filter: blur(1px);
+        }
+        .cloud::before, .cloud::after {
+            content: '';
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+        }
+        .cloud::before { width: 50%; height: 80%; top: -40%; left: 15%; }
+        .cloud::after { width: 40%; height: 60%; top: -25%; right: 15%; }
+
+        .floor {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 80px;
+            background: #5c493b;
+            border-top: 10px solid #6b905c;
+            z-index: 10;
+        }
+
+        #alpaca-wrapper {
+            position: absolute;
+            bottom: 80px;
+            left: 60px;
+            width: 70px;
+            height: 85px;
+            z-index: 50;
+        }
+
+        #alpaca-sprite {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        #shield-aura {
+            position: absolute;
+            width: 110px;
+            height: 120px;
+            border: 5px solid #00e5ff;
+            border-radius: 50%;
+            top: -20px;
+            left: -20px;
+            background: rgba(0, 229, 255, 0.15);
+            box-shadow: 0 0 25px #00e5ff;
+            display: none;
+            animation: pulse 0.8s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 0.4; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+
+        .game-font { font-family: 'Fredoka One', cursive; }
+        .stat-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            border: 3px solid #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .item { position: absolute; z-index: 20; display: flex; align-items: center; justify-content: center; }
+        .particle { position: absolute; pointer-events: none; border-radius: 50%; z-index: 60; }
+
+        /* Modal Reducido */
+        .modal-container {
+            position: relative;
+            background: #fff;
+            border-radius: 30px;
+            border-bottom: 8px solid #e0e0e0;
+            box-shadow: 0 15px 0 rgba(0,0,0,0.1);
+            transform: scale(0.9);
+        }
+
+        .modal-header {
+            position: absolute;
+            top: -35px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-1deg);
+            background: #ff5252;
+            padding: 8px 30px;
+            border-radius: 15px;
+            border-bottom: 5px solid #b71c1c;
+            color: white;
+            white-space: nowrap;
+            z-index: 2;
+        }
+
+        .new-record-banner {
+            position: absolute;
+            top: -55px;
+            right: -20px;
+            background: #ffc107;
+            color: #5d4037;
+            padding: 5px 12px;
+            border-radius: 12px;
+            transform: rotate(12deg);
+            box-shadow: 0 4px 0 #ffa000;
+            z-index: 3;
+            animation: float 2s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: rotate(12deg) translateY(0); }
+            50% { transform: rotate(12deg) translateY(-8px); }
+        }
+
+        .result-box {
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            border: 2px solid #eee;
+        }
+
+        .btn-play {
+            background: #EFA523;
+            color: white;
+            border-bottom: 6px solid #ca8a1b;
+            transition: all 0.1s;
+        }
+        .btn-play:active {
+            border-bottom-width: 2px;
+            transform: translateY(4px);
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #4b5563;
+            border-bottom: 4px solid #d1d5db;
+            transition: all 0.1s;
+        }
+        .btn-secondary:active {
+            border-bottom-width: 2px;
+            transform: translateY(2px);
+        }
+
+        .shine-effect {
+            position: relative;
+            overflow: hidden;
+        }
+        .shine-effect::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+        @keyframes shine {
+            0% { left: -100%; }
+            20% { left: 100%; }
+            100% { left: 100%; }
+        }
+    </style>
+</head>
+<body>
+    
+
+<div id="game-container">
+    <div class="absolute top-4 left-4 right-4 flex justify-between items-start z-[100]">
+        <div class="flex flex-col gap-1.5">
+            <div class="stat-card px-3 py-1.5 rounded-xl flex items-center gap-2">
+                <span class="text-xl">🌵</span>
+                <div id="score" class="text-lg game-font text-green-700">0</div>
+            </div>
+            <div class="stat-card px-3 py-1.5 rounded-xl flex items-center gap-2">
+                <span class="text-xl">🪙</span>
+                <div id="coins" class="text-lg game-font text-yellow-600">0</div>
+            </div>
+        </div>
+        
+        <div class="flex flex-col items-end gap-1.5">
+            <div class="stat-card px-3 py-1.5 rounded-xl text-center">
+                <div class="text-[9px] uppercase font-bold text-gray-400">Récord</div>
+                <div id="highscore" class="text-md game-font text-orange-600">0</div>
+            </div>
+            <!--<button onclick="goToMenu()" class="stat-card px-3 py-1.5 rounded-lg game-font text-[10px] text-gray-500 hover:text-gray-800 transition-colors uppercase">
+                Inicio
+            </button>-->
+        </div>
+    </div>
+
+    <div id="clouds-layer"></div>
+    <div id="alpaca-wrapper">
+        <div id="shield-aura"></div>
+        <img id="alpaca-sprite" src="img/ArpakaVolteada.png" alt="Alpaca">
+    </div>
+    <div class="floor"></div>
+
+    <div id="game-over" class="hidden absolute inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-[1000]">
+        <div class="modal-container w-[85%] max-w-[340px] p-8 pt-12 text-center">
+            <div class="modal-header">
+                <h2 class="game-font text-2xl tracking-tight">¡OH ÑO!</h2>
+            </div>
+            <div id="record-banner" class="new-record-banner hidden">
+                <span class="game-font text-[10px] italic">NUEVO RÉCORD</span>
+            </div>
+            
+            <div class="space-y-3 mb-6">
+                <div class="result-box">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-xl">🌵</div>
+                        <div class="text-left">
+                            <p class="text-[9px] font-black text-gray-400 uppercase">Puntos</p>
+                            <p id="final-score" class="text-2xl game-font text-gray-800 leading-tight">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="result-box">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center text-xl">🪙</div>
+                        <div class="text-left">
+                            <p class="text-[9px] font-black text-gray-400 uppercase">Monedas</p>
+                            <p id="final-coins" class="text-2xl game-font text-gray-800 leading-tight">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-3">
+                <button id="retry-btn" class="btn-play shine-effect w-full py-4 rounded-2xl game-font text-xl">
+                    REINTENTAR
+                </button>
+                <a href="index.html" class="btn-secondary w-full py-3 rounded-xl game-font text-sm">VOLVER AL MENÚ</a>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const config = {
+        gravity: 0.8,
+        jumpPower: -16,
+        baseSpeed: 7,
+        maxSpeed: 16,
+        spawnInterval: 2200,
+        cycleLength: 200 // Puntos para completar un ciclo día/noche completo
+    };
+
+    // Definimos colores clave en formato RGB para poder interpolar matemáticamente
+    const skyStates = [
+        { score: 0,   top: [79, 195, 247], bottom: [163, 228, 247] }, // Día (Azul claro)
+        { score: 0.25, top: [255, 152, 0],  bottom: [255, 204, 128] }, // Atardecer (Naranja)
+        { score: 0.5,  top: [63, 81, 181],  bottom: [156, 39, 176] },  // Crepúsculo (Violeta)
+        { score: 0.75, top: [26, 35, 126],  bottom: [40, 53, 147] },   // Noche (Azul profundo)
+        { score: 1.0,  top: [13, 17, 23],   bottom: [22, 27, 34] }     // Media noche (Oscuro)
+    ];
+
+    let state = {
+        active: false,
+        score: 0,
+        coins: 0,
+        highscore: parseInt(localStorage.getItem('alpaca_high_new')) || 0,
+        speed: config.baseSpeed,
+        y: 0,
+        velY: 0,
+        jumps: 0,
+        entities: [],
+        clouds: [],
+        lastSpawn: 0,
+        hasShield: false,
+        isTurbo: false
+    };
+
+    const container = document.getElementById('game-container');
+    const cloudLayer = document.getElementById('clouds-layer');
+    const alpaca = document.getElementById('alpaca-wrapper');
+    const shieldAura = document.getElementById('shield-aura');
+    const scoreUI = document.getElementById('score');
+    const coinsUI = document.getElementById('coins');
+    const highscoreUI = document.getElementById('highscore');
+    const gameOverScreen = document.getElementById('game-over');
+    const recordBanner = document.getElementById('record-banner');
+
+    // Función Lerp (Interpolación lineal entre colores)
+    function lerpColor(c1, c2, factor) {
+        const r = Math.round(c1[0] + factor * (c2[0] - c1[0]));
+        const g = Math.round(c1[1] + factor * (c2[1] - c1[1]));
+        const b = Math.round(c1[2] + factor * (c2[2] - c1[2]));
+        return `rgb(${r}, ${g}, ${b})`;
+    }
+
+    function updateAtmosphere() {
+        // Obtenemos el progreso dentro del ciclo actual (0.0 a 1.0)
+        const progress = (state.score % config.cycleLength) / config.cycleLength;
+        
+        let start, end, localFactor;
+
+        // Buscamos entre qué dos estados nos encontramos
+        for (let i = 0; i < skyStates.length - 1; i++) {
+            if (progress >= skyStates[i].score && progress <= skyStates[i+1].score) {
+                start = skyStates[i];
+                end = skyStates[i+1];
+                // Calculamos cuánto hemos avanzado entre el estado i e i+1
+                const range = end.score - start.score;
+                localFactor = (progress - start.score) / range;
+                break;
+            }
+        }
+
+        if (start && end) {
+            const topColor = lerpColor(start.top, end.top, localFactor);
+            const bottomColor = lerpColor(start.bottom, end.bottom, localFactor);
+            container.style.background = `linear-gradient(to bottom, ${topColor} 0%, ${bottomColor} 100%)`;
+        }
+    }
+
+    function createParticles(x, y, color, count = 10) {
+        for(let i=0; i<count; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.style.background = color;
+            p.style.width = (Math.random() * 8 + 4) + 'px';
+            p.style.height = p.style.width;
+            p.style.left = x + 'px';
+            p.style.bottom = y + 'px';
+            container.appendChild(p);
+
+            const vx = (Math.random() - 0.5) * 15;
+            const vy = (Math.random() - 0.5) * 15;
+            let op = 1;
+            let cx = x, cy = y;
+
+            const move = () => {
+                cx += vx; cy += vy; op -= 0.03;
+                p.style.left = cx + 'px'; p.style.bottom = cy + 'px'; p.style.opacity = op;
+                if(op > 0) requestAnimationFrame(move); else p.remove();
+            };
+            requestAnimationFrame(move);
+        }
+    }
+
+    function goToMenu() {
+        window.location.href = "index.html"; 
+    }
+
+    function setupClouds() {
+        cloudLayer.innerHTML = '';
+        state.clouds = [];
+        for(let i=0; i<4; i++) { spawnCloud(Math.random() * window.innerWidth); }
+    }
+
+    function spawnCloud(startX = window.innerWidth + 100) {
+        const c = document.createElement('div');
+        c.className = 'cloud';
+        const w = 80 + Math.random() * 120;
+        const h = w * 0.35;
+        c.style.width = w + 'px';
+        c.style.height = h + 'px';
+        const y = 20 + Math.random() * (window.innerHeight - 250);
+        const speed = 0.2 + (Math.random() * 0.4);
+        c.style.left = startX + 'px';
+        c.style.top = y + 'px';
+        c.style.opacity = 0.15 + Math.random() * 0.25;
+        cloudLayer.appendChild(c);
+        state.clouds.push({ el: c, x: startX, speed: speed });
+    }
+
+    function spawn() {
+        if(!state.active) return;
+        const r = Math.random();
+        let entity = null;
+
+        if(r < 0.12) {
+            entity = { type: 'coin', label: '🪙', w: 40, h: 40, y: 140 + Math.random() * 140, collect: true };
+        } else if(r < 0.18) {
+            const type = Math.random() > 0.5 ? 'shield' : 'turbo';
+            entity = { type: 'power', label: type === 'shield' ? '🛡️' : '🌶️', w: 45, h: 45, y: 110, collect: true, pType: type };
+        } else {
+            const bird = Math.random() > 0.88 && state.score > 15;
+            entity = { type: 'obs', label: bird ? '🦅' : '🌵', w: 70, h: 70, y: bird ? 210 : 80, collect: false, scored: false };
+        }
+
+        const el = document.createElement('div');
+        el.className = 'item';
+        el.style.fontSize = (entity.w * 0.8) + 'px';
+        el.style.width = entity.w + 'px';
+        el.style.height = entity.h + 'px';
+        el.innerHTML = entity.label;
+        let startX = window.innerWidth + 100;
+        el.style.left = startX + 'px';
+        el.style.bottom = entity.y + 'px';
+        container.appendChild(el);
+        state.entities.push({ ...entity, el, x: startX });
+    }
+
+    function gameLoop(time) {
+        if(!state.active) return;
+
+        // Actualización constante de la atmósfera para transición suave
+        updateAtmosphere();
+
+        for(let i=state.clouds.length-1; i>=0; i--) {
+            const c = state.clouds[i];
+            c.x -= c.speed;
+            c.el.style.left = c.x + 'px';
+            if(c.x < -300) {
+                c.el.remove();
+                state.clouds.splice(i, 1);
+                if(state.clouds.length < 5) spawnCloud();
+            }
+        }
+
+        let dynamicInterval = config.spawnInterval - (state.speed * 115);
+        if(state.isTurbo) dynamicInterval = Math.max(500, dynamicInterval);
+
+        if(time - state.lastSpawn > dynamicInterval) {
+            spawn();
+            state.lastSpawn = time;
+        }
+
+        state.velY += config.gravity;
+        state.y -= state.velY;
+        if(state.y < 0) { state.y = 0; state.velY = 0; state.jumps = 0; }
+        
+        alpaca.style.transform = `translateY(${-state.y}px) rotate(${state.jumps > 0 ? state.velY * 1.5 : 0}deg)`;
+
+        const aRect = { l: 70, r: 120, t: window.innerHeight - 80 - state.y - 75, b: window.innerHeight - 80 - state.y };
+
+        for(let i = state.entities.length-1; i>=0; i--) {
+            const ent = state.entities[i];
+            ent.x -= state.speed;
+            ent.el.style.left = ent.x + 'px';
+
+            const eRect = { l: ent.x+8, r: ent.x + ent.w - 8, t: window.innerHeight - ent.y - ent.h + 8, b: window.innerHeight - ent.y - 8 };
+
+            if(aRect.l < eRect.r && aRect.r > eRect.l && aRect.t < eRect.b && aRect.b > eRect.t) {
+                if(ent.collect) {
+                    if(ent.type === 'coin') {
+                        state.coins++; coinsUI.innerText = state.coins;
+                        createParticles(ent.x, ent.y, '#ffd54f');
+                    } else if(ent.pType === 'shield') {
+                        state.hasShield = true; shieldAura.style.display = 'block';
+                    } else if(ent.pType === 'turbo') {
+                        activateTurbo();
+                    }
+                    ent.el.remove(); state.entities.splice(i, 1);
+                } else {
+                    if(state.isTurbo) {
+                        createParticles(ent.x, ent.y, '#ff5722', 15);
+                        ent.el.remove(); state.entities.splice(i, 1);
+                    } else if(state.hasShield) {
+                        state.hasShield = false; shieldAura.style.display = 'none';
+                        createParticles(ent.x, ent.y, '#00e5ff', 20);
+                        ent.el.remove(); state.entities.splice(i, 1);
+                    } else {
+                        gameOver(); return;
+                    }
+                }
+            }
+
+            if(!ent.collect && !ent.scored && ent.x < aRect.l) {
+                ent.scored = true; state.score++; scoreUI.innerText = state.score;
+            }
+            if(ent.x < -100) { ent.el.remove(); state.entities.splice(i, 1); }
+        }
+
+        if(!state.isTurbo) state.speed = Math.min(config.maxSpeed, state.speed + 0.0035);
+        requestAnimationFrame(gameLoop);
+    }
+
+    function activateTurbo() {
+        if(state.isTurbo) return;
+        state.isTurbo = true;
+        const oldSpeed = state.speed;
+        state.speed = 14; 
+        alpaca.style.filter = 'drop-shadow(0 0 15px #ff5722) brightness(1.2)';
+        setTimeout(() => {
+            state.isTurbo = false;
+            state.speed = Math.max(oldSpeed, config.baseSpeed);
+            alpaca.style.filter = 'none';
+        }, 3500);
+    }
+
+    function gameOver() {
+        state.active = false;
+        createParticles(100, 100 + state.y, '#ff5252', 30);
+        document.getElementById('final-score').innerText = state.score;
+        document.getElementById('final-coins').innerText = state.coins;
+        if(state.score > state.highscore) {
+            state.highscore = state.score;
+            localStorage.setItem('alpaca_high_new', state.highscore);
+            recordBanner.classList.remove('hidden');
+        } else {
+            recordBanner.classList.add('hidden');
+        }
+        highscoreUI.innerText = state.highscore;
+        gameOverScreen.classList.remove('hidden');
+    }
+
+    function start() {
+        state.entities.forEach(e => e.el.remove());
+        state.entities = [];
+        state.score = 0; state.coins = 0;
+        state.speed = config.baseSpeed;
+        state.y = 0; state.velY = 0;
+        state.active = true;
+        state.hasShield = false; state.isTurbo = false;
+        scoreUI.innerText = "0";
+        coinsUI.innerText = "0";
+        shieldAura.style.display = 'none';
+        gameOverScreen.classList.add('hidden');
+        setupClouds();
+        requestAnimationFrame(gameLoop);
+    }
+
+    window.addEventListener('keydown', (e) => {
+        if(e.code === 'Space' || e.code === 'ArrowUp') {
+            if(state.active) {
+                if(state.jumps < 2) { state.velY = config.jumpPower; state.jumps++; }
+            } else if(!gameOverScreen.classList.contains('hidden')) {
+                start();
+            }
+        }
+    });
+
+    container.addEventListener('touchstart', (e) => {
+        if(state.active) {
+            if(state.jumps < 2) { state.velY = config.jumpPower; state.jumps++; }
+        }
+    });
+
+    document.getElementById('retry-btn').onclick = start;
+    highscoreUI.innerText = state.highscore;
+    start();
+</script>
+
+</body>
+</html>
