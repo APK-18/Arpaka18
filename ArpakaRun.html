@@ -313,11 +313,11 @@
             </div>
 
             <div class="flex flex-col gap-3">
-                <button id="retry-btn" class="btn-play shine-effect w-full py-3 rounded-2xl game-font text-lg active:scale-95">
+                <button id="retry-btn" class="btn-play shine-effect w-full py-3 rounded-2xl game-font text-lg active:scale-95" onclick="event.stopPropagation(); start();">
 
                     REINTENTAR
                 </button>
-                <a href="index.html" class="btn-secondary w-full py-3 rounded-xl game-font text-sm active:scale-95">
+                <a href="index.html" class="btn-secondary w-full py-3 rounded-xl game-font text-sm active:scale-95" onclick="event.stopPropagation(); volverMenu();">
 VOLVER AL MENÚ</a>
                 
             </div>
@@ -611,15 +611,22 @@ gameOverScreen.classList.add('game-over-animate');
         }
     });
     document.addEventListener('touchstart', (e) => {
-    if(state.active) {
-        if(state.jumps < 2) {
+
+    // 🚫 Si el Game Over está visible, NO hacer nada
+    if (!gameOverScreen.classList.contains('hidden')) {
+        return;
+    }
+
+    // 🎮 Juego activo → saltar
+    if (state.active) {
+        if (state.jumps < 2) {
             state.velY = config.jumpPower;
             state.jumps++;
         }
-    } else if(!gameOverScreen.classList.contains('hidden')) {
-        start();
     }
+
 });
+
 
 
     
