@@ -120,10 +120,37 @@
             0% { background-position: 200% 0; }
             100% { background-position: -200% 0; }
         }
+                .grand-opening-banner {
+            background: linear-gradient(90deg, #d4af37, #f1d592, #d4af37);
+            color: #000;
+            text-align: center;
+            padding: 8px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            position: relative;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .celebration-corner {
+            position: fixed;
+            width: 150px;
+            height: 150px;
+            pointer-events: none;
+            z-index: 999;
+        }
+        .top-left { top: 30px; left: 0; }
+        .top-right { top: 30px; right: 0; transform: scaleX(-1); }
+
     </style>
 </head>
 <body class="bg-arpaka-neutral text-arpaka-black font-sans">
-
+  <!-- Banner de Inauguración -->
+    <div class="grand-opening-banner">
+        ✨ Grand Opening - Bienvenidos a la nueva experiencia ARPAKA18 ✨
+    </div>
     <!-- BARRA LATERAL DESPLEGABLE (MOBILE/TABLET) --><aside id="mobile-sidebar" class="fixed top-0 right-0 h-full w-64 md:w-80 bg-white/90 backdrop-blur-md z-50 transform translate-x-full transition-transform duration-300 shadow-2xl">
         <div class="p-6 h-full flex flex-col">
             <!-- Encabezado y botón de cierre --><div class="flex justify-between items-center mb-10 border-b pb-4">
